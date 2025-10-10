@@ -24,7 +24,11 @@ function LoginPage() {
         <form onSubmit={onSubmit}>
           <h3 className="heading-login">Iniciar Sesión</h3>
           <div className="login">
-            {<div className="text-exist">{signinErrors.body?.mensaje}</div>}
+            {
+              <div className="text-exist">
+                {signinErrors.body?.mensaje || signinErrors.message}
+              </div>
+            }
             <div className="login-field">
               <label>Usuario/Email:</label>
               <input

@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (userData) => {
     try {
       await registerRequest(userData);
+      // Esperamos un pequeño delay para asegurar que la cookie HttpOnly se registre
       await signin({ user: userData.user, password: userData.password });
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de registro" });
@@ -29,9 +30,15 @@ export const AuthProvider = ({ children }) => {
   // Login
   const signin = async (userData) => {
     try {
-      const res = await loginRequest(userData);
-      setUser(res.user); // cookie httpOnly maneja token
+      const res = await loginRequest(userData); // loginRequest ya incluye withCredentials
+      // Micro-delay para que la cookie HttpOnly se registre antes de usar verify
+      await new Promise((resolve) => setTimeout(resolve, 150));
+
+      // Verificar token después del login
+      const verifyRes = await verifyTokenRequest();
+      setUser(verifyRes.data.user);
       setIsAuthenticated(true);
+      setErrors({});
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de login" });
       setUser(null);
@@ -42,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   // Logout
   const logout = async () => {
     try {
-      await axios.post("/auth/logout", null, { withCredentials: true }); // <--- corregido // borra cookie
+      await axios.post("/auth/logout", null, { withCredentials: true });
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
@@ -58,10 +65,13 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
-  // Verificar sesión al iniciar
+  // Verificar sesión al iniciar la app
   useEffect(() => {
     const checkLogin = async () => {
       try {
+        // Pequeño delay para asegurar que cookies se lean correctamente
+        await new Promise((resolve) => setTimeout(resolve, 150));
+
         const res = await verifyTokenRequest();
         setUser(res.data.user);
         setIsAuthenticated(true);
@@ -93,7 +103,7 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         errors,
         loading,
-        setUser, // opcional si quieres actualizar user desde dashboard
+        setUser,
       }}
     >
       {children}
