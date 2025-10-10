@@ -1,21 +1,12 @@
 import axios from "./axios";
 
-// Petición para obtener todos los marcadores (pública)
+// Peticiones de marcadores (usa cookie httpOnly, no token manual)
 export const getMarkersRequest = () => axios.get("/markers");
-
-// Petición para crear un nuevo marcador
-// Petición para crear un nuevo marcador
 export const createMarkerRequest = (markerData) =>
-  axios.post("/markers", markerData, { withCredentials: true });
-
-// Petición para actualizar un marcador
+  axios.post("/markers", markerData);
 export const updateMarkerRequest = (markerId, markerData) =>
-  axios.put(`/markers/${markerId}`, markerData, { withCredentials: true });
-
-// Petición para aprobar un marcador (solo admin)
+  axios.put(`/markers/${markerId}`, markerData);
 export const approveMarkerRequest = (markerId) =>
-  axios.put(`/markers/${markerId}/approve`, {}, { withCredentials: true });
-
-// Petición para eliminar un marcador
+  axios.put(`/markers/${markerId}/approve`);
 export const deleteMarkerRequest = (markerId) =>
-  axios.delete(`/markers/${markerId}`, { withCredentials: true });
+  axios.delete(`/markers/${markerId}`);
