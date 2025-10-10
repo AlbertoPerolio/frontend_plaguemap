@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
 import axios from "../api/axios";
+
 export const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -15,32 +16,32 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
-  const signup = async (user) => {
+
+  // --- Registro ---
+  const signup = async (userData) => {
     try {
-      const res = await registerRequest(user);
-      await signin({
-        user: user.user,
-        password: user.password,
-      });
+      await registerRequest(userData);
+      await signin({ user: userData.user, password: userData.password });
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de registro" });
     }
   };
 
+  // --- Login ---
   const signin = async (userData) => {
     try {
       const res = await loginRequest(userData);
-      const token = res.data.token; // <-- este es el JWT
-      setUser({ ...res.data.user, token }); // Guardar token en user
+      setUser(res.data.user); // el token ya está en cookie httpOnly
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de login" });
     }
   };
 
+  // --- Logout ---
   const logout = async () => {
     try {
-      await axios.post("/auth/logout");
+      await axios.post("/auth/logout", {}, { withCredentials: true }); // Borra cookie
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
@@ -48,15 +49,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // --- Limpieza de errores automáticos ---
   useEffect(() => {
     if (errors.body) {
-      const timer = setTimeout(() => {
-        setErrors({});
-      }, 5000);
+      const timer = setTimeout(() => setErrors({}), 5000);
       return () => clearTimeout(timer);
     }
   }, [errors]);
 
+  // --- Verificar sesión al iniciar ---
   useEffect(() => {
     const checkLogin = async () => {
       try {
@@ -64,15 +65,15 @@ export const AuthProvider = ({ children }) => {
         setUser(res.data.user);
         setIsAuthenticated(true);
       } catch (err) {
-        setIsAuthenticated(false);
         setUser(null);
+        setIsAuthenticated(false);
       } finally {
         setLoading(false);
       }
     };
-
     checkLogin();
   }, []);
+
   return (
     <AuthContext.Provider
       value={{ signup, signin, logout, user, isAuthenticated, errors, loading }}
