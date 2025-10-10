@@ -3,6 +3,7 @@ import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
 import axios from "../api/axios";
 
 export const AuthContext = createContext();
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   // --- Registro ---
   const signup = async (userData) => {
     try {
-      await registerRequest(userData);
+      await registerRequest(userData, { withCredentials: true });
       await signin({ user: userData.user, password: userData.password });
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de registro" });
@@ -30,18 +31,20 @@ export const AuthProvider = ({ children }) => {
   // --- Login ---
   const signin = async (userData) => {
     try {
-      const res = await loginRequest(userData);
-      setUser(res.data.user); // el token ya está en cookie httpOnly
+      const res = await loginRequest(userData, { withCredentials: true });
+      setUser(res.data.user); // cookie httpOnly maneja el token
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de login" });
+      setUser(null);
+      setIsAuthenticated(false);
     }
   };
 
   // --- Logout ---
   const logout = async () => {
     try {
-      await axios.post("/auth/logout", {}, { withCredentials: true }); // Borra cookie
+      await axios.post("/auth/logout", {}, { withCredentials: true }); // borra cookie
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
@@ -49,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // --- Limpieza de errores automáticos ---
+  // --- Limpiar errores automáticamente ---
   useEffect(() => {
     if (errors.body) {
       const timer = setTimeout(() => setErrors({}), 5000);
@@ -57,11 +60,11 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
-  // --- Verificar sesión al iniciar ---
+  // --- Verificar sesión al cargar ---
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const res = await verifyTokenRequest();
+        const res = await verifyTokenRequest({ withCredentials: true });
         setUser(res.data.user);
         setIsAuthenticated(true);
       } catch (err) {

@@ -1,31 +1,29 @@
 import axios from "./axios";
 
-// 1. Necesaria para obtener la lista de usuarios con sus roles
-export const getUsersRequest = () => axios.get("/users");
+// 1. Obtener la lista de usuarios con sus roles
+export const getUsersRequest = () =>
+  axios.get("/users", { withCredentials: true });
 
-// 2. Necesaria para cambiar el rol en el backend (usa la ruta PUT /users/:id/role)
+// 2. Cambiar el rol en el backend (PUT /users/:id/role)
 export const updateUserRoleRequest = (id_reg, newRole) =>
-  axios.put(`/users/${id_reg}/role`, { role: newRole });
+  axios.put(
+    `/users/${id_reg}/role`,
+    { role: newRole },
+    { withCredentials: true }
+  );
 
-export const updateUserRequest = (id_reg, data, token) =>
-  axios
-    .put(`/users/${id_reg}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    })
-    .then((res) => {
-      // devolvemos el mismo formato que espera el frontend
-      return {
-        data: {
-          mensaje: res.data.mensaje,
-          usuario: {
-            id_reg: res.data.id_reg,
-            name: res.data.name,
-            user: res.data.user,
-            email: res.data.email,
-          },
+// 3. Actualizar datos de usuario
+export const updateUserRequest = (id_reg, data) =>
+  axios.put(`/users/${id_reg}`, data, { withCredentials: true }).then((res) => {
+    return {
+      data: {
+        mensaje: res.data.mensaje,
+        usuario: {
+          id_reg: res.data.id_reg,
+          name: res.data.name,
+          user: res.data.user,
+          email: res.data.email,
         },
-      };
-    });
+      },
+    };
+  });
