@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   const signin = async (userData) => {
     try {
       const res = await loginRequest(userData);
-      setUser(res.data.user); // cookie httpOnly maneja token
+      setUser(res.user); // cookie httpOnly maneja token
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de login" });
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   // Logout
   const logout = async () => {
     try {
-      await axios.post("/auth/logout"); // borra cookie
+      await axios.post("/auth/logout", null, { withCredentials: true }); // <--- corregido // borra cookie
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
