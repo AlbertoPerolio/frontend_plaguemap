@@ -6,9 +6,7 @@ export const AuthContext = createContext();
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
 
@@ -18,21 +16,21 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // --- Registro ---
+  // Registro
   const signup = async (userData) => {
     try {
-      await registerRequest(userData, { withCredentials: true });
+      await registerRequest(userData);
       await signin({ user: userData.user, password: userData.password });
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de registro" });
     }
   };
 
-  // --- Login ---
+  // Login
   const signin = async (userData) => {
     try {
-      const res = await loginRequest(userData, { withCredentials: true });
-      setUser(res.data.user); // cookie httpOnly maneja el token
+      const res = await loginRequest(userData);
+      setUser(res.data.user); // cookie httpOnly maneja token
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response?.data || { message: "Error de login" });
@@ -41,10 +39,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // --- Logout ---
+  // Logout
   const logout = async () => {
     try {
-      await axios.post("/auth/logout", {}, { withCredentials: true }); // borra cookie
+      await axios.post("/auth/logout"); // borra cookie
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
@@ -52,22 +50,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // --- Limpiar errores automáticamente ---
+  // Limpiar errores automáticamente
   useEffect(() => {
-    if (errors.body) {
+    if (Object.keys(errors).length > 0) {
       const timer = setTimeout(() => setErrors({}), 5000);
       return () => clearTimeout(timer);
     }
   }, [errors]);
 
-  // --- Verificar sesión al cargar ---
+  // Verificar sesión al iniciar
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const res = await verifyTokenRequest({ withCredentials: true });
+        const res = await verifyTokenRequest();
         setUser(res.data.user);
         setIsAuthenticated(true);
-      } catch (err) {
+      } catch {
         setUser(null);
         setIsAuthenticated(false);
       } finally {
@@ -77,9 +75,26 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
+  // Actualizar rol si cambia (para panel admin en tiempo real)
+  useEffect(() => {
+    if (user?.role === "admin") {
+      // Aquí podrías disparar la carga de usuarios/admin data
+      // Ej: dispatch(fetchUsers()) o usar otro hook para dashboard
+    }
+  }, [user?.role]);
+
   return (
     <AuthContext.Provider
-      value={{ signup, signin, logout, user, isAuthenticated, errors, loading }}
+      value={{
+        signup,
+        signin,
+        logout,
+        user,
+        isAuthenticated,
+        errors,
+        loading,
+        setUser, // opcional si quieres actualizar user desde dashboard
+      }}
     >
       {children}
     </AuthContext.Provider>

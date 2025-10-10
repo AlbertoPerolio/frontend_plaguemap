@@ -16,7 +16,6 @@ import ConfirmationModal from "../components/ConfirmationModal";
 function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const token = user?.token;
 
   const [userList, setUserList] = useState([]);
   const [allMarkers, setAllMarkers] = useState([]);
@@ -44,12 +43,16 @@ function Dashboard() {
   // ------------------ Fetch Markers & Users ------------------
   const fetchMarkers = useCallback(async () => {
     setLoading(true);
-    let users = [];
 
+    // 1️⃣ Cargar usuarios (solo admin verá nombres)
+    let users = [];
     try {
       const usersResponse = await getUsersRequest();
-      const rawUsers = usersResponse.data?.body;
-      users = Array.isArray(rawUsers) ? rawUsers : [];
+      users = Array.isArray(usersResponse.data?.body)
+        ? usersResponse.data.body
+        : Array.isArray(usersResponse.data)
+        ? usersResponse.data
+        : [];
       setUserList(users);
     } catch (error) {
       console.warn(
@@ -57,18 +60,18 @@ function Dashboard() {
       );
     }
 
+    // 2️⃣ Mapear usuarios para enriquecer marcadores
     const userMap = new Map(
-      Array.isArray(users)
-        ? users.map((u) => [
-            u.id_reg.toString(),
-            { username: u.name, role: u.role },
-          ])
-        : []
+      users.map((u) => [
+        u.id_reg.toString(),
+        { username: u.name, role: u.role },
+      ])
     );
 
+    // 3️⃣ Cargar marcadores
     try {
       const markersResponse = await getMarkersRequest();
-      let markers = Array.isArray(markersResponse.data)
+      const markers = Array.isArray(markersResponse.data)
         ? markersResponse.data
         : [];
 
@@ -77,11 +80,7 @@ function Dashboard() {
           username: "Desconocido",
           role: "user",
         };
-        return {
-          ...m,
-          username: userData.username,
-          userRole: userData.role,
-        };
+        return { ...m, username: userData.username, userRole: userData.role };
       });
 
       setAllMarkers(enrichedMarkers);
@@ -116,7 +115,7 @@ function Dashboard() {
   }, [fetchMarkers]);
 
   // ------------------ Roles ------------------
-  const handleRoleChange = async (id_reg, newRole, username) => {
+  const handleRoleChange = (id_reg, newRole, username) => {
     if (id_reg === user.id_reg) {
       alert("No puedes cambiar tu propio rol desde el panel de reportes.");
       return;
@@ -126,24 +125,14 @@ function Dashboard() {
     if (currentUserRole === newRole) return;
 
     if (newRole === "admin" || newRole === "user") {
-      setRoleConfirm({
-        isOpen: true,
-        id_reg,
-        newRole,
-        username,
-      });
-      return;
+      setRoleConfirm({ isOpen: true, id_reg, newRole, username });
     }
   };
 
   const confirmRoleChange = async () => {
     if (roleConfirm.id_reg && roleConfirm.newRole) {
       try {
-        await updateUserRoleRequest(
-          roleConfirm.id_reg,
-          roleConfirm.newRole,
-          token
-        );
+        await updateUserRoleRequest(roleConfirm.id_reg, roleConfirm.newRole);
 
         setUserList((prevUsers) =>
           prevUsers.map((u) =>
@@ -179,14 +168,13 @@ function Dashboard() {
     });
   };
 
-  const cancelRoleChange = () => {
+  const cancelRoleChange = () =>
     setRoleConfirm({
       isOpen: false,
       id_reg: null,
       newRole: null,
       username: "",
     });
-  };
 
   const getRoleConfirmationMessage = () => {
     const isPromoting = roleConfirm.newRole === "admin";
@@ -204,21 +192,18 @@ function Dashboard() {
   const openImageModal = (imageUrl) => setModalImage(imageUrl);
   const closeImageModal = () => setModalImage(null);
 
-  const handleGoToLocation = (lat, lng) => {
+  const handleGoToLocation = (lat, lng) =>
     navigate(`/plagueMap?lat=${lat}&lng=${lng}`);
-  };
 
-  const handleEdit = (idplague) => {
+  const handleEdit = (idplague) =>
     navigate("/plagueMap", { state: { action: "edit", idplague } });
-  };
 
-  const handleDelete = async (idplague) => {
+  const handleDelete = (idplague) =>
     setConfirmModal({ isOpen: true, idToDelete: idplague });
-  };
 
   const confirmDelete = async () => {
     if (confirmModal.idToDelete) {
-      await deleteMarkerRequest(confirmModal.idToDelete, token);
+      await deleteMarkerRequest(confirmModal.idToDelete);
       fetchMarkers();
     }
     setConfirmModal({ isOpen: false, idToDelete: null });
@@ -228,7 +213,7 @@ function Dashboard() {
     setConfirmModal({ isOpen: false, idToDelete: null });
 
   const handleApprove = async (idplague) => {
-    await approveMarkerRequest(idplague, token);
+    await approveMarkerRequest(idplague);
     fetchMarkers();
   };
 
@@ -253,21 +238,21 @@ function Dashboard() {
     if (filters.startDate) {
       currentMarkers = currentMarkers.filter((m) => {
         const markerDate = new Date(m.createdAt || m.created_at);
-        const markerDateStr = markerDate.toISOString().split("T")[0];
-        return markerDateStr >= filters.startDate;
+        return markerDate.toISOString().split("T")[0] >= filters.startDate;
       });
     }
 
     if (filters.endDate) {
       currentMarkers = currentMarkers.filter((m) => {
         const markerDate = new Date(m.createdAt || m.created_at);
-        const markerDateStr = markerDate.toISOString().split("T")[0];
-        return markerDateStr <= filters.endDate;
+        return markerDate.toISOString().split("T")[0] <= filters.endDate;
       });
     }
+
     if (filters.showMyReports) {
       currentMarkers = currentMarkers.filter((m) => m.id_reg === user.id_reg);
     }
+
     if (user.role !== "admin") {
       currentMarkers = currentMarkers.filter(
         (m) => m.status === "aprobado" || m.id_reg === user.id_reg
@@ -279,8 +264,8 @@ function Dashboard() {
 
   const uniquePlagues = useMemo(() => {
     const plagues = new Set(["all"]);
-    allMarkers.forEach((m) => plagues.add(m.title));
-    return Array.from(plagues).filter((p) => p);
+    allMarkers.forEach((m) => m.title && plagues.add(m.title));
+    return Array.from(plagues);
   }, [allMarkers]);
 
   // ------------------ Render ------------------
@@ -385,7 +370,6 @@ function Dashboard() {
               <th>Acciones</th>
             </tr>
           </thead>
-
           <tbody>
             {filteredMarkers.map((marker) => (
               <tr key={marker.idplague}>
@@ -437,14 +421,9 @@ function Dashboard() {
                 </td>
                 <td>
                   {marker.createdAt || marker.created_at
-                    ? (() => {
-                        const date = new Date(
-                          marker.createdAt || marker.created_at
-                        );
-                        return isNaN(date.getTime())
-                          ? "Inválida"
-                          : date.toLocaleDateString();
-                      })()
+                    ? new Date(
+                        marker.createdAt || marker.created_at
+                      ).toLocaleDateString()
                     : "Sin Fecha"}
                 </td>
                 <td className="actions-cell">
