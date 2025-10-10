@@ -31,12 +31,9 @@ export const AuthProvider = ({ children }) => {
   const signin = async (userData) => {
     try {
       const res = await loginRequest(userData); // loginRequest ya incluye withCredentials
-      // Micro-delay para que la cookie HttpOnly se registre antes de usar verify
-      await new Promise((resolve) => setTimeout(resolve, 150));
 
-      // Verificar token después del login
-      const verifyRes = await verifyTokenRequest();
-      setUser(verifyRes.data.user);
+      // ✅ Usamos directamente el usuario que devuelve el backend
+      setUser(res.user);
       setIsAuthenticated(true);
       setErrors({});
     } catch (error) {
