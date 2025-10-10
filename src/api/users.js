@@ -7,9 +7,6 @@ export const getUsersRequest = () => axios.get("/users");
 export const updateUserRoleRequest = (id_reg, newRole) =>
   axios.put(`/users/${id_reg}/role`, { role: newRole });
 
-// 🛑 3. NUEVA FUNCIÓN: Actualizar datos de perfil (PUT /users/:id) 🛑
-// Esta función se usa tanto para cambiar detalles como para cambiar la contraseña.
-
 export const updateUserRequest = (id_reg, data, token) =>
   axios
     .put(`/users/${id_reg}`, data, {
