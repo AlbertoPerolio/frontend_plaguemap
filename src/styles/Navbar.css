@@ -1,0 +1,116 @@
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.btn-up {
+    position: fixed;
+    width: auto;
+    height: 60px;
+    line-height: 55px;
+    bottom: 15px;
+    right: 15px;
+    background-color: #2c2c2c;
+    filter: grayscale(80%);
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    transition: 0.2s ease;
+    z-index: 9999;
+    border: none;
+    cursor: pointer;
+
+}
+
+.btn-up:hover {
+    filter: grayscale(0%);
+    background-color: #f4813f;
+    box-shadow: 0px 1px 20px #f4813f;
+}
+
+/* Contenedor principal */
+.header {
+    width: 100%;
+    padding: 10px 40px;
+    background-color: #1a1a1a;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.logo:hover {
+    color: #f4813f;
+}
+
+.nav-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-item {
+    list-style-type: none;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
+    transition: 0.3s;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: rgb(255, 129, 57);
+    transition: width 0.4s ease-in-out;
+}
+
+.nav-item:hover .nav-link::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: rgb(255, 129, 57);
+}
+
+/* Botones de login/register */
+.btn-navbar {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid rgb(36, 193, 255);
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: rgb(36, 193, 255);
+    transition: 0.3s ease;
+}
+
+.btn-navbar:hover {
+    background-color: transparent;
+    color: rgb(255, 129, 57);
+    border: 1px solid rgb(255, 129, 57);
+}

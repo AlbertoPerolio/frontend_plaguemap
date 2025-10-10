@@ -1,0 +1,270 @@
+/* --- Fuentes y Variables --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+    --color-bg: #0f0f0f;
+    --color-surface: rgba(36, 36, 36, 0.85);
+    --color-accent: #ff8c42;
+    --color-text: #f5f5f5;
+    --color-muted: #aaaaaa;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --blur-bg: blur(14px);
+}
+
+/* --- Contenedor Principal --- */
+.profile-container {
+    font-family: 'Inter', sans-serif;
+    color: var(--color-text);
+    background: var(--color-bg);
+    min-height: 100vh;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: radial-gradient(circle at top left, #1c1c1c, #0e0e0e);
+}
+
+/* --- Título Principal --- */
+.main-title {
+    font-size: 2.8em;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    text-align: center;
+    text-shadow: 0 0 15px rgba(255, 140, 66, 0.3);
+}
+
+/* --- Banner Usuario --- */
+.user-info-banner {
+    background: var(--color-surface);
+    backdrop-filter: var(--blur-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 18px 30px;
+    margin-bottom: 40px;
+    font-size: 1.05em;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.user-name-display {
+    font-weight: 600;
+    color: #8ecaff;
+}
+
+.role-tag {
+    display: inline-block;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    margin-left: 12px;
+    letter-spacing: 0.3px;
+}
+
+.role-admin {
+    background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+    color: #f3e5f5;
+}
+
+.role-user {
+    background: linear-gradient(135deg, #1976d2, #1565c0);
+    color: #e3f2fd;
+}
+
+/* --- Grid adaptable --- */
+.profile-grid {
+    display: grid;
+    gap: 35px;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+    .profile-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- Tarjetas --- */
+.profile-card {
+    background: var(--color-surface);
+    backdrop-filter: var(--blur-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* efecto decorativo sin interferir en clicks */
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 140, 66, 0.15), transparent 70%);
+    transition: top 0.5s;
+    pointer-events: none;
+    /* ✅ evita bloquear los inputs */
+    z-index: 0;
+}
+
+.profile-card:hover::before {
+    top: 0;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(255, 140, 66, 0.2);
+}
+
+.card-title {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Formularios --- */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--color-muted);
+    margin-bottom: 8px;
+    transition: color 0.3s;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1em;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background-color: rgba(20, 20, 20, 0.9);
+    color: var(--color-text);
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus {
+    border: 2px solid var(--color-accent);
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 140, 66, 0.3);
+}
+
+.form-input:disabled {
+    background-color: #2a2a2a;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* --- Botones --- */
+.action-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.action-button.primary {
+    background: linear-gradient(135deg, #ff8c42, #f57c00);
+    color: #1a1a1a;
+    box-shadow: 0 4px 15px rgba(255, 140, 66, 0.4);
+}
+
+.action-button.primary:hover {
+    background: linear-gradient(135deg, #ff9d61, #ff8c42);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 140, 66, 0.5);
+}
+
+.action-button.secondary {
+    background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+    color: var(--color-text);
+    border: 1px solid #555;
+}
+
+.action-button.secondary:hover {
+    background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+}
+
+.action-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* --- Mensajes de Estado --- */
+.profile-message {
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.4s forwards;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-message.error {
+    background: #b71c1c;
+    color: #ffebee;
+}
+
+.profile-message.success {
+    background: #1b5e20;
+    color: #e8f5e9;
+}
+
+.profile-message.info {
+    background: #01579b;
+    color: #e1f5fe;
+}
+
+/* --- Animaciones --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

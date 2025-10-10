@@ -1,0 +1,131 @@
+.read-us-container {
+    margin: 0 auto;
+    /* Centra el contenedor horizontalmente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 15vh;
+}
+
+.read-us {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    background-color: rgb(54, 54, 54);
+    margin-top: 80px;
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    /* sombra suave */
+    align-items: center;
+    /* Centra verticalmente la imagen con el texto */
+}
+
+.content-read {
+    flex: 1;
+    padding: 20px 40px;
+    position: relative;
+    text-align: justify;
+}
+
+.heading-read {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgb(255, 129, 57);
+    margin: 0 0 20px 0;
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.heading-read::after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: -8px;
+    background-color: rgb(255, 129, 57);
+    width: 46px;
+    height: 2px;
+}
+
+.para-read {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 28px;
+    margin: 20px 0;
+}
+
+.img-read {
+    flex: 1;
+    width: 40%;
+    max-width: 400px;
+    height: auto;
+    opacity: 0.7;
+    filter: grayscale(80%);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.img-read:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+}
+
+.btn-more-inf {
+    margin-left: 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 1px solid rgba(255, 129, 57, 0.5);
+    color: rgb(255, 129, 57);
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 22px;
+    position: relative;
+    z-index: 22;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-more-inf:hover {
+    background-color: rgb(255, 129, 57);
+    color: #fff;
+    border-color: rgb(255, 129, 57);
+}
+
+/* 🔹 RESPONSIVE */
+@media (max-width: 1024px) {
+    .read-us {
+        flex-direction: column;
+        /* Imagen debajo del texto */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .img-read {
+        width: 70%;
+        max-width: 300px;
+    }
+
+    .content-read {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .read-us-container {
+        width: 95%;
+        margin-bottom: 10vh;
+    }
+
+    .img-read {
+        width: 90%;
+    }
+}

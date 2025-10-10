@@ -1,0 +1,315 @@
+/* ============================ */
+/* SECCIÓN INICIO */
+/* ============================ */
+.content-home2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin: 50px 0;
+}
+
+.home-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-home {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.img-home:hover {
+    transform: scale(1.05);
+}
+
+.home-span {
+    color: rgb(255, 129, 57);
+}
+
+.home-text {
+    text-align: center;
+    max-width: 450px;
+}
+
+.home-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.para-home {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 24px;
+    margin: 14px 0px;
+}
+
+.home-links {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background-color: rgb(36, 193, 255);
+    border: 1px solid rgb(36, 193, 255);
+    border-radius: 50px;
+    padding: 10px 37px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.home-links.btn-2 {
+    color: rgb(36, 193, 255);
+    background-color: transparent;
+}
+
+.home-links:hover {
+    background-color: transparent;
+    color: rgb(255, 129, 57);
+    border-color: rgb(255, 129, 57);
+}
+
+/* ============================ */
+/* SECCIÓN SOBRE LAS PLAGAS */
+/* ============================ */
+.about-us-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin: 60px auto 20vh auto;
+}
+
+.about-us {
+    display: flex;
+    gap: 20px;
+    background-color: rgb(54, 54, 54);
+    padding: 20px;
+    width: 100%;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.content-about {
+    flex: 1;
+    padding: 20px 50px;
+}
+
+.heading-about {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgb(255, 129, 57);
+    margin: 10px 0 34px 0;
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.heading-about::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    background-color: rgb(255, 129, 57);
+    width: 46px;
+    height: 2px;
+}
+
+.para-about {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 25px;
+    margin: 25px 0;
+}
+
+.img-about {
+    flex: 1;
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.link-about {
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 129, 57, 0.7);
+    color: rgb(255, 129, 57);
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 22px;
+    border-radius: 25px;
+    transition: all 0.2s ease;
+}
+
+.link-about:hover {
+    color: rgb(250, 183, 144);
+    border-color: rgb(250, 183, 144);
+}
+
+/* ============================ */
+/* SECCIÓN DE PRODUCTOS / CARDS */
+/* ============================ */
+.product-category {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0 50px 0;
+}
+
+.heading-product {
+    font-size: 34px;
+    color: rgb(255, 129, 57);
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.heading-product::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    background-color: rgb(255, 129, 57);
+    width: 56px;
+    height: 2px;
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+}
+
+.scroll-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.card-product {
+    background-color: #242323;
+    padding: 16px 12px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    width: 300px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scroll-snap-align: start;
+}
+
+.card-product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.img-card {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: 16px;
+    color: rgb(255, 129, 57);
+    width: 100%;
+    border-bottom: 1px solid rgb(255, 129, 57);
+    padding: 6px 0;
+    margin: 12px 0 12px;
+}
+
+.card-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    line-height: 20px;
+    margin-bottom: 12px;
+}
+
+.btn-product-ctg {
+    color: rgb(255, 129, 57);
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    align-self: flex-start;
+    transition: all 0.2s ease;
+}
+
+.btn-product-ctg:hover {
+    color: rgb(250, 183, 144);
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(36, 193, 255, 0.9);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.carousel-btn:hover {
+    background-color: rgb(255, 129, 57);
+}
+
+.carousel-btn.left {
+    left: -20px;
+}
+
+.carousel-btn.right {
+    right: -20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .scroll-container {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-product {
+        width: 90%;
+    }
+
+    .carousel-btn.left {
+        left: 0;
+    }
+
+    .carousel-btn.right {
+        right: 0;
+    }
+}
