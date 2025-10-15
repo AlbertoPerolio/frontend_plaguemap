@@ -114,3 +114,64 @@
     color: rgb(255, 129, 57);
     border: 1px solid rgb(255, 129, 57);
 }
+
+/*responsive*/
+
+@media (max-width: 992px) {
+    .header {
+        padding: 10px 20px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-list {
+        gap: 15px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    .btn-navbar {
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        width: 100%;
+        padding: 8px 0;
+    }
+
+    .btn-navbar {
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn-up {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
