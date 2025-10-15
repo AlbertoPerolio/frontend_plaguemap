@@ -17,11 +17,10 @@ function LocationControl({
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const { latitude, longitude } = pos.coords; // 1. Mueve el centro del mapa
-
-        map.setView([latitude, longitude], 15); // 2. NOTIFICA AL COMPONENTE PADRE (PlagueMap)
-
+        const { latitude, longitude } = pos.coords;
         const newPos = { lat: latitude, lng: longitude };
+
+        map.setView([latitude, longitude], 15);
 
         if (setNewMarkerPosition) setNewMarkerPosition(newPos);
         if (setTemporaryMarker) setTemporaryMarker([latitude, longitude]);
@@ -30,14 +29,15 @@ function LocationControl({
       (error) => {
         console.error("Error de geolocalización:", error);
         alert(
-          "No se pudo obtener la ubicación. Asegúrate de que los servicios de geolocalización estén activados."
+          "No se pudo obtener la ubicación. No se podrá crear el marcador."
         );
+
+        // Esto asegura que no se muestre formulario ni se cree marcador
+        if (setNewMarkerPosition) setNewMarkerPosition(null);
+        if (setTemporaryMarker) setTemporaryMarker(null);
+        if (setShowForm) setShowForm(false);
       },
-      {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-      }
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
   }, [map, setNewMarkerPosition, setTemporaryMarker, setShowForm]);
 
