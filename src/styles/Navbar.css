@@ -5,6 +5,13 @@
     box-sizing: border-box;
 }
 
+.menu {
+    display: none;
+    cursor: pointer;
+    font-size: 28px;
+    color: white;
+}
+
 .btn-up {
     position: fixed;
     width: auto;
@@ -143,34 +150,35 @@
     .navbar {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
     }
 
     .nav-list {
         flex-direction: column;
         width: 100%;
+        display: none;
+        /* Se oculta por defecto */
         gap: 10px;
+    }
+
+    .nav-list.active {
+        display: flex;
+        /* Se muestra al abrir el menú */
     }
 
     .nav-item {
         width: 100%;
     }
 
-    .nav-link {
-        width: 100%;
-        padding: 8px 0;
-    }
-
+    .nav-link,
     .btn-navbar {
         width: 100%;
         text-align: center;
+        padding: 8px 0;
     }
 
-    .btn-up {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        bottom: 10px;
-        right: 10px;
+    /* Mostrar botón de menú */
+    .menu {
+        display: block;
+        margin-left: auto;
     }
 }

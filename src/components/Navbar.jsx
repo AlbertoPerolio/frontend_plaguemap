@@ -1,76 +1,56 @@
 import "../styles/Navbar.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useState, useEffect } from "react"; // 🚨 Agregamos useState y useEffect
+import { useState, useEffect } from "react";
 
 function Navbar({ hideExtraButtons }) {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 🚨 1. Nuevo estado para controlar la visibilidad del botón "Ir arriba"
+  // Estado para el botón "Ir arriba"
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
-  // 🚨 2. Lógica para manejar el evento de scroll
+  // Estado para el menú móvil
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
-    // Si estamos en una ruta donde los botones están ocultos (ej. /plagueMap), no ejecutamos la lógica de scroll
     if (hideExtraButtons) return;
 
     const handleScroll = () => {
-      // Muestra el botón si el scroll vertical es mayor a 100 píxeles
-      const scrollThreshold = 100;
-      if (window.scrollY > scrollThreshold) {
-        setShowScrollToTop(true);
-      } else {
-        setShowScrollToTop(false);
-      }
+      setShowScrollToTop(window.scrollY > 100);
     };
 
-    // Añadir el listener cuando el componente se monta
     window.addEventListener("scroll", handleScroll);
-
-    // Limpiar el listener cuando el componente se desmonta o hideExtraButtons cambia
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [hideExtraButtons]); // Dependencia clave para manejar la ruta del mapa
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hideExtraButtons]);
 
   const handleScrollTo = (id) => {
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
         const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
+        if (element) element.scrollIntoView({ behavior: "smooth" });
       }, 100);
     } else {
       const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      if (element) element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
     <div>
-      {/* 🚨 El contenedor general se mantiene para la lógica de hideExtraButtons */}
-      {!hideExtraButtons && (
-        <>
-          {/* 🚨 Botón de Volver Arriba: Ahora depende de showScrollToTop */}
-          {showScrollToTop && (
-            <button
-              className="btn-up"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              <img
-                className="btn-up"
-                src={require("../img/flechaarriba.png")}
-                alt="Ir arriba"
-              />
-            </button>
-          )}
-        </>
+      {!hideExtraButtons && showScrollToTop && (
+        <button
+          className="btn-up"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <img
+            className="btn-up"
+            src={require("../img/flechaarriba.png")}
+            alt="Ir arriba"
+          />
+        </button>
       )}
 
       <div className="header">
@@ -81,7 +61,12 @@ function Navbar({ hideExtraButtons }) {
             </Link>
           </div>
 
-          <ul className="nav-list">
+          {/* Botón de menú para móviles */}
+          <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
+            ☰
+          </div>
+
+          <ul className={`nav-list ${menuOpen ? "active" : ""}`}>
             <li className="nav-item">
               <Link to="/" className="nav-link">
                 Inicio
@@ -118,19 +103,8 @@ function Navbar({ hideExtraButtons }) {
                     Dashboard
                   </Link>
                 </li>
-                {/* <li className="nav-item">
-                  <Link to="/dates" className="btn-navbar">
-                    Datos
-                  </Link>
-                </li> */}
                 <li className="nav-item">
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      logout();
-                    }}
-                    className="btn-navbar"
-                  >
+                  <Link to="/" onClick={() => logout()} className="btn-navbar">
                     Salir
                   </Link>
                 </li>
