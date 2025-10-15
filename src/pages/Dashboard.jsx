@@ -276,10 +276,11 @@ function Dashboard() {
     return Array.from(plagues);
   }, [allMarkers]);
 
-  // ------------------ Exportar Excel ------------------
+  // ------------------ Exportar Excel con Estadísticas ------------------
   const exportToExcel = () => {
     if (!user || user.role !== "admin") return;
 
+    // --- Datos principales ---
     const data = allMarkers.map((m) => ({
       Usuario: m.username,
       Rol: m.userRole,
@@ -291,10 +292,52 @@ function Dashboard() {
       Longitud: m.lng,
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Marcadores");
-    XLSX.writeFile(workbook, "estadistica_marcadores.xlsx");
+    // --- Estadísticas ---
+    const totalMarkers = allMarkers.length;
+    const statusCounts = allMarkers.reduce(
+      (acc, m) => {
+        if (m.status === "aprobado") acc.aprobado += 1;
+        else if (m.status === "pendiente") acc.pendiente += 1;
+        return acc;
+      },
+      { aprobado: 0, pendiente: 0 }
+    );
+
+    const plagueCounts = allMarkers.reduce((acc, m) => {
+      const key = m.title || "Sin Tipo";
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+
+    const userCounts = allMarkers.reduce((acc, m) => {
+      const key = m.username || "Desconocido";
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+
+    const wb = XLSX.utils.book_new();
+
+    // Hoja 1: Datos de marcadores
+    const wsData = XLSX.utils.json_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, wsData, "Marcadores");
+
+    // Hoja 2: Estadísticas generales
+    const statsData = [
+      ["Total de Marcadores", totalMarkers],
+      [],
+      ["Marcadores por Estado"],
+      ...Object.entries(statusCounts),
+      [],
+      ["Marcadores por Plaga"],
+      ...Object.entries(plagueCounts),
+      [],
+      ["Marcadores por Usuario"],
+      ...Object.entries(userCounts),
+    ];
+    const wsStats = XLSX.utils.aoa_to_sheet(statsData);
+    XLSX.utils.book_append_sheet(wb, wsStats, "Estadísticas");
+
+    XLSX.writeFile(wb, "estadistica_marcadores.xlsx");
   };
 
   // ------------------ Render ------------------
