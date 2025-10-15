@@ -55,12 +55,15 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .logo {
     font-weight: 700;
     font-size: 28px;
     color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
 }
 
 .logo:hover {
@@ -155,7 +158,8 @@
 @media (max-width: 576px) {
     .navbar {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        gap: 10px;
     }
 
     /* Menú móvil oculto por defecto */
@@ -166,23 +170,26 @@
         overflow: hidden;
         max-height: 0;
         gap: 10px;
+        align-items: center;
     }
 
     /* Menú activo */
     .nav-list.active {
         display: flex;
         max-height: 500px;
-        /* Ajustable según cantidad de items */
         opacity: 1;
+        align-items: center;
     }
 
     .nav-item {
         width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     .nav-link,
     .btn-navbar {
-        width: 100%;
+        width: auto;
         text-align: center;
         padding: 8px 0;
     }
@@ -190,6 +197,6 @@
     /* Mostrar botón de menú */
     .menu {
         display: block;
-        margin-left: auto;
+        margin-left: 0;
     }
 }
