@@ -118,9 +118,7 @@
     border-radius: 8px;
     box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
     pointer-events: auto;
-    /* 🛑 Ajuste del ancho: Aumentamos el máximo para acomodar 3 botones */
     min-width: 280px;
-    /* Asegura que siempre haya espacio horizontal */
     max-width: 320px;
 }
 
@@ -157,12 +155,8 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    /* 🛑 Nuevo: Aseguramos que ocupe el ancho máximo del popup */
     width: 100%;
-
-    /* 🛑 CORRECCIÓN: Quitamos el padding si lo habías agregado. */
     padding: 0;
-    /* Pequeño padding horizontal si es necesario */
 }
 
 .marker-actions button {
@@ -174,17 +168,13 @@
     font-size: 14px;
     border-radius: 25px;
     padding: 10px 5px;
-    /* 🛑 REGLA CLAVE PARA DISTRIBUCIÓN HORIZONTAL */
     flex-grow: 1;
     flex-basis: 0;
-    /* Permite que flex-grow distribuya el espacio */
     min-width: 80px;
-    /* El ancho mínimo para que no se compriman */
     border: 2px solid rgb(255, 129, 57);
     outline: none;
     filter: grayscale(80%);
     background-color: #a89488;
-    /* Usamos un color base más claro como el de tu imagen */
     color: #fff;
     text-transform: uppercase;
     font-weight: 600;
@@ -193,7 +183,6 @@
     cursor: pointer;
     pointer-events: auto;
     box-sizing: border-box;
-    /* 🛑 Ajuste visual para que se vea como en tus imágenes */
     background-color: #a89488;
     border: none;
 }
@@ -209,7 +198,7 @@
     font-size: 20px;
 }
 
-/*-------------------------------------------------------estilo de los botones del zoom*/
+/*------estilo de los botones del zoom*/
 /* Contenedor del control de zoom */
 .leaflet-control-zoom {
     border: none;
@@ -221,9 +210,7 @@
 /* Estilos base de los botones (+ y -) */
 .leaflet-control-zoom a {
     background-color: #333 !important;
-    /* El color base siempre será oscuro */
     color: #fff !important;
-    /* El color del texto siempre será blanco */
     font-weight: bold;
     display: block;
     padding: 8px 10px;
@@ -231,11 +218,8 @@
     text-decoration: none;
     font-family: inherit;
     font-size: 24px;
-    /* Tamaño de la fuente para los símbolos */
     line-height: 24px;
-    /* Altura de línea que coincide con el tamaño de la fuente */
     padding: 0;
-    /* Remueve el padding para que el line-height funcione */
 }
 
 .leaflet-control-zoom a:hover {
@@ -252,24 +236,20 @@
 .leaflet-control-geocoder {
     border: none;
     background-color: #333;
-    /* Fondo oscuro */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     font-family: inherit;
     padding: 5px;
-    /* Añade un poco de espacio alrededor del input */
 }
 
 /* Campo de entrada de texto */
 .leaflet-control-geocoder-form input {
     background-color: #444;
-    /* Un tono más claro para el input */
     color: #fff;
     border: none;
     border-radius: 5px;
     padding: 8px;
     width: calc(100% - 16px);
-    /* Ajusta el ancho teniendo en cuenta el padding */
     box-sizing: border-box;
     font-size: 14px;
 }
@@ -278,12 +258,10 @@
 .leaflet-control-geocoder-alternatives {
     background-color: #333;
     color: #eee;
-    /* Un tono ligeramente más claro para el texto de las opciones */
     border-radius: 5px;
     margin-top: 2px;
     padding: 5px;
     list-style: none;
-    /* Elimina los puntos de la lista */
     padding-left: 10px;
 }
 
@@ -315,13 +293,85 @@
     justify-content: center;
     align-items: center;
     padding: 0;
-
-    /* Estilos del ícono (el emoji) */
     font-size: 18px;
-    /* Ajusta el tamaño del ícono */
 }
 
 /* Efecto al pasar el mouse por encima */
 .btn-locate:hover {
     background-color: #575656;
+}
+
+/* responsive */
+@media (max-width: 992px) {
+    .plague-map-wrapper {
+        height: calc(100vh - 100px);
+    }
+
+    .marker-form {
+        padding: 40px 20px;
+        width: 90%;
+    }
+
+    .marker-form h3 {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    .marker-form input,
+    .marker-form select {
+        padding: 14px 18px;
+        font-size: 13px;
+    }
+
+    .marker-form button {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    .marker-actions button {
+        min-width: 70px;
+        font-size: 12px;
+        padding: 8px 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .plague-map-wrapper {
+        height: calc(100vh - 80px);
+    }
+
+    .marker-form {
+        padding: 30px 15px;
+        width: 95%;
+    }
+
+    .marker-form h3 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .marker-form input,
+    .marker-form select {
+        font-size: 12px;
+        padding: 12px 15px;
+    }
+
+    .marker-form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 13px;
+        margin: 8px 0;
+    }
+
+    .marker-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .marker-actions button {
+        width: 100%;
+        font-size: 12px;
+        padding: 10px 0;
+        min-width: 0;
+    }
 }
