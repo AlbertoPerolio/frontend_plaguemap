@@ -152,12 +152,10 @@
         align-items: stretch;
     }
 
-    /* Contenedor superior: logo + botón menú */
     .navbar-top {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        /* ✅ Logo y botón al mismo nivel */
         width: 100%;
     }
 
@@ -165,7 +163,6 @@
         flex-direction: column;
         width: 100%;
         display: none;
-        /* Oculta por defecto */
         gap: 10px;
         align-items: center;
         margin-top: 10px;
@@ -173,7 +170,6 @@
 
     .nav-list.active {
         display: flex;
-        /* Muestra al abrir el menú */
     }
 
     .nav-item {
@@ -184,7 +180,7 @@
 
     .nav-link,
     .btn-navbar {
-        width: auto;
+        width: 100%;
         text-align: center;
         padding: 8px 0;
     }
