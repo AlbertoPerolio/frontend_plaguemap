@@ -44,7 +44,6 @@ function Dashboard() {
   const fetchMarkers = useCallback(async () => {
     setLoading(true);
 
-    // 1️⃣ Cargar usuarios (solo admin verá nombres)
     let users = [];
     try {
       const usersResponse = await getUsersRequest();
@@ -60,7 +59,6 @@ function Dashboard() {
       );
     }
 
-    // 2️⃣ Mapear usuarios para enriquecer marcadores
     const userMap = new Map(
       users.map((u) => [
         u.id_reg.toString(),
@@ -68,7 +66,6 @@ function Dashboard() {
       ])
     );
 
-    // 3️⃣ Cargar marcadores
     try {
       const markersResponse = await getMarkersRequest();
       const markers = Array.isArray(markersResponse.data)
@@ -217,7 +214,17 @@ function Dashboard() {
     fetchMarkers();
   };
 
-  // ------------------ Filtrado ------------------
+  // ------------------ Filtros ------------------
+  const handleClearFilters = () => {
+    setFilters({
+      status: user?.role === "admin" ? "all" : "approved",
+      plagueType: "all",
+      showMyReports: false,
+      startDate: "",
+      endDate: "",
+    });
+  };
+
   const filteredMarkers = useMemo(() => {
     if (!user) return allMarkers.filter((m) => m.status === "aprobado");
 
@@ -263,7 +270,7 @@ function Dashboard() {
   }, [allMarkers, filters, user]);
 
   const uniquePlagues = useMemo(() => {
-    const plagues = new Set(["all"]);
+    const plagues = new Set();
     allMarkers.forEach((m) => m.title && plagues.add(m.title));
     return Array.from(plagues);
   }, [allMarkers]);
@@ -350,6 +357,13 @@ function Dashboard() {
             }
           />
         </label>
+
+        <button
+          className="dashboard-button reset-button"
+          onClick={handleClearFilters}
+        >
+          Borrar Filtros
+        </button>
       </div>
 
       <div
