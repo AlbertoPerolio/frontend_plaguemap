@@ -8,7 +8,7 @@ import ReactDOM from "react-dom/client";
 import { Marker } from "react-leaflet";
 import MarkerActions from "./MarkerActions";
 
-// 🚨 1. Aceptar el prop openImageModal
+// Aceptar el prop openImageModal
 const MarkerPopup = forwardRef(
   (
     { marker, user, defaultIcon, onEdit, onDelete, onApprove, openImageModal },
@@ -26,7 +26,7 @@ const MarkerPopup = forwardRef(
       },
     }));
 
-    // 🚨 FUNCIÓN CLAVE: Detiene la propagación del evento para las acciones del botón
+    // Detiene la propagación del evento para las acciones del botón
     const handleActionClick = (e, actionCallback, id) => {
       // Detiene que el clic llegue al mapa y dispare el MapClickHandler
       e.stopPropagation();
@@ -48,7 +48,7 @@ const MarkerPopup = forwardRef(
             {marker.description}
             <br />
 
-            {/* 🚨 CORRECCIÓN en la imagen: Detiene la propagación */}
+            {/*la imagen: Detiene la propagación */}
             {marker.imgurl && (
               <img
                 src={marker.imgurl}
@@ -66,11 +66,11 @@ const MarkerPopup = forwardRef(
             <p>Latitud: {marker.lat}</p>
             <p>Longitud: {marker.lng}</p>
 
-            {/* 🚨 CORRECCIÓN: Pasamos los manejadores de eventos envueltos */}
+            {/*Pasamos los manejadores de eventos envueltos */}
             <MarkerActions
               marker={marker}
               user={user}
-              // 💡 Envolvemos las funciones en handleActionClick
+              // Envolvemos las funciones en handleActionClick
               onEdit={(e) => handleActionClick(e, onEdit, marker.idplague)}
               onDelete={(e) => handleActionClick(e, onDelete, marker.idplague)}
               onApprove={(e) =>
@@ -89,7 +89,7 @@ const MarkerPopup = forwardRef(
         };
       }
     }, [marker, user, onEdit, onDelete, onApprove, openImageModal]);
-    // Nota: handleActionClick se añade como dependencia.
+    // handleActionClick se añade como dependencia.
 
     return (
       <Marker
