@@ -52,7 +52,10 @@ function LocationControl({
       const btn = L.DomUtil.create("button", "btn-locate");
       btn.innerHTML = "📍";
 
-      btn.onclick = handleGeolocate; // EL BOTÓN LLAMA A LA NUEVA FUNCIÓN
+      L.DomEvent.on(btn, "click", L.DomEvent.stopPropagation);
+      L.DomEvent.on(btn, "click", L.DomEvent.preventDefault);
+
+      btn.onclick = handleGeolocate;
       return btn;
     };
     locateControl.addTo(map);
