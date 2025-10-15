@@ -2,7 +2,7 @@ import "../styles/Navbar.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa"; // 📦 icono del menú (hamburguesa)
+import { FaBars } from "react-icons/fa";
 
 function Navbar({ hideExtraButtons }) {
   const { user, isAuthenticated, logout } = useAuth();
@@ -10,7 +10,7 @@ function Navbar({ hideExtraButtons }) {
   const location = useLocation();
 
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // ✅ Estado del menú
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (hideExtraButtons) return;
@@ -35,7 +35,7 @@ function Navbar({ hideExtraButtons }) {
       const element = document.getElementById(id);
       if (element) element.scrollIntoView({ behavior: "smooth" });
     }
-    setMenuOpen(false); // ✅ Cierra el menú al hacer clic
+    setMenuOpen(false);
   };
 
   return (
@@ -56,7 +56,6 @@ function Navbar({ hideExtraButtons }) {
 
       <div className="header">
         <nav className="navbar">
-          {/* ✅ Nuevo contenedor superior */}
           <div className="navbar-top">
             <div className="div-logo">
               <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
@@ -64,13 +63,13 @@ function Navbar({ hideExtraButtons }) {
               </Link>
             </div>
 
-            {/* ✅ Botón menú responsive */}
+            {/* Botón menú responsive */}
             <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
               <FaBars />
             </div>
           </div>
 
-          {/* ✅ Lista del menú */}
+          {/*  Lista del menú */}
           <ul className={`nav-list ${menuOpen ? "active" : ""}`}>
             <li className="nav-item">
               <Link
@@ -103,7 +102,6 @@ function Navbar({ hideExtraButtons }) {
                 Plague Map
               </Link>
             </li>
-
             {isAuthenticated ? (
               <>
                 <li className="nav-item">
