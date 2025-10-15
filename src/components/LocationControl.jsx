@@ -1,15 +1,14 @@
-import { useEffect, useCallback } from "react"; // 🛑 IMPORTAR useCallback
+import { useEffect, useCallback } from "react"; // useCallback
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 
-// 🛑 ACEPTA UNA NUEVA PROP: onLocateReady (para devolver la función de geolocalizar)
 function LocationControl({
   setNewMarkerPosition,
   setTemporaryMarker,
   setShowForm,
-  onLocateReady, // 🛑 NUEVA PROP
+  onLocateReady, //NUEVA PROP
 }) {
-  const map = useMap(); // 🚀 FUNCIÓN CENTRAL DE GEOLOCALIZACIÓN (MOVEMOS LA LÓGICA AQUÍ)
+  const map = useMap(); // FUNCIÓN CENTRAL DE GEOLOCALIZACIÓN
 
   const handleGeolocate = useCallback(() => {
     if (!navigator.geolocation) {
@@ -18,11 +17,10 @@ function LocationControl({
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const { latitude, longitude } = pos.coords; // 1. Mueve el centro del mapa
-
-        map.setView([latitude, longitude], 15); // 2. NOTIFICA AL COMPONENTE PADRE (PlagueMap)
-
+        const { latitude, longitude } = pos.coords;
         const newPos = { lat: latitude, lng: longitude };
+
+        map.setView([latitude, longitude], 15);
 
         if (setNewMarkerPosition) setNewMarkerPosition(newPos);
         if (setTemporaryMarker) setTemporaryMarker([latitude, longitude]);
@@ -31,19 +29,19 @@ function LocationControl({
       (error) => {
         console.error("Error de geolocalización:", error);
         alert(
-          "No se pudo obtener la ubicación. Asegúrate de que los servicios de geolocalización estén activados."
+          "No se pudo obtener la ubicación. No se podrá crear el marcador."
         );
+
+        if (setNewMarkerPosition) setNewMarkerPosition(null);
+        if (setTemporaryMarker) setTemporaryMarker(null);
+        if (setShowForm) setShowForm(false);
       },
-      {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-      }
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
   }, [map, setNewMarkerPosition, setTemporaryMarker, setShowForm]);
 
   useEffect(() => {
-    // 🛑 DEVOLVEMOS LA FUNCIÓN AL PADRE UNA VEZ QUE EL MAPA ESTÁ LISTO
+    // DEVOLVEMOS LA FUNCIÓN AL PADRE UNA VEZ QUE EL MAPA ESTÁ LISTO
     if (onLocateReady) {
       onLocateReady(handleGeolocate);
     }
@@ -53,7 +51,11 @@ function LocationControl({
       const btn = L.DomUtil.create("button", "btn-locate");
       btn.innerHTML = "📍";
 
-      btn.onclick = handleGeolocate; // 🛑 EL BOTÓN LLAMA A LA NUEVA FUNCIÓN
+      // Evitar que el click se propague al mapa
+      L.DomEvent.on(btn, "click", L.DomEvent.stopPropagation);
+      L.DomEvent.on(btn, "click", L.DomEvent.preventDefault);
+
+      btn.onclick = handleGeolocate;
       return btn;
     };
     locateControl.addTo(map);

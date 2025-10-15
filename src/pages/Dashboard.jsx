@@ -92,11 +92,42 @@ function Dashboard() {
 
   // ------------------ WebSockets ------------------
   useEffect(() => {
-    fetchMarkers();
+    // función estable para actualizar marcadores
+    const updateMarkers = async () => {
+      try {
+        const markersResponse = await getMarkersRequest();
+        const markers = Array.isArray(markersResponse.data)
+          ? markersResponse.data
+          : [];
 
+        // enriquecemos con usuarios
+        const userMap = new Map(
+          userList.map((u) => [
+            u.id_reg.toString(),
+            { username: u.name, role: u.role },
+          ])
+        );
+        const enrichedMarkers = markers.map((m) => {
+          const userData = userMap.get(m.id_reg?.toString()) || {
+            username: "Desconocido",
+            role: "user",
+          };
+          return { ...m, username: userData.username, userRole: userData.role };
+        });
+
+        setAllMarkers(enrichedMarkers);
+      } catch (error) {
+        console.error("Error fetching markers:", error);
+      }
+    };
+
+    // inicializamos
+    updateMarkers();
+
+    // listeners socket
     const onMarkerChange = () => {
-      console.log("Websocket: Cambio en marcador detectado. Recargando...");
-      fetchMarkers();
+      console.log("Websocket: cambio detectado, recargando...");
+      updateMarkers();
     };
 
     socket.on("marker_added", onMarkerChange);
@@ -110,7 +141,7 @@ function Dashboard() {
       socket.off("marker_deleted", onMarkerChange);
       socket.off("marker_updated", onMarkerChange);
     };
-  }, [fetchMarkers]);
+  }, [userList]);
 
   // ------------------ Roles ------------------
   const handleRoleChange = (id_reg, newRole, username) => {
