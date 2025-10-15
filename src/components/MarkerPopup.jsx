@@ -63,6 +63,8 @@ const MarkerPopup = forwardRef(
             )}
 
             <p>Estado: {marker.status}</p>
+            <p>Latitud: {marker.lat}</p>
+            <p>Longitud: {marker.lng}</p>
 
             {/* 🚨 CORRECCIÓN: Pasamos los manejadores de eventos envueltos */}
             <MarkerActions
