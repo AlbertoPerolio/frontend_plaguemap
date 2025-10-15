@@ -17,87 +17,61 @@
 
 /* --- Estilos para el Contenido del Modal --- */
 .confirmation-modal {
-    /* Fondo del modal más oscuro, similar al de tu Dashboard */
     background-color: #333;
-    /* Un gris oscuro */
     padding: 30px;
     border-radius: 10px;
-    /* Bordes más redondeados */
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-    /* Sombra más pronunciada */
     max-width: 450px;
-    /* Un poco más ancho */
     width: 90%;
     text-align: center;
     border: 1px solid #555;
-    /* Borde sutil para definirlo */
 }
 
 .confirmation-modal p {
     margin-bottom: 30px;
-    /* Más espacio debajo del texto */
     font-size: 1.2em;
-    /* Texto un poco más grande */
     color: #eee;
-    /* Color de texto claro para fondo oscuro */
     line-height: 1.5;
-    /* Mejor legibilidad */
 }
 
 /* --- Estilos para los Botones del Modal --- */
 .modal-actions {
     display: flex;
-    /* Para alinear los botones en línea */
     justify-content: center;
-    /* Centrar los botones */
     gap: 20px;
-    /* Espacio entre los botones */
     margin-top: 20px;
-    /* Espacio superior */
 }
 
 .modal-actions button {
     padding: 12px 25px;
-    /* Más padding para botones más grandes */
     border: none;
     border-radius: 6px;
-    /* Bordes redondeados */
     cursor: pointer;
     font-weight: bold;
     font-size: 1em;
     transition: all 0.2s ease-in-out;
-    /* Transiciones suaves */
     text-transform: uppercase;
-    /* Texto en mayúsculas */
     letter-spacing: 0.5px;
-    /* Espaciado entre letras */
 }
 
 .confirm-button {
     background-color: #e74c3c;
-    /* Rojo para confirmar (mantener si es el color de acción principal) */
     color: white;
 }
 
 .confirm-button:hover {
     background-color: #c0392b;
-    /* Rojo más oscuro al pasar el ratón */
     transform: translateY(-2px);
-    /* Pequeño efecto 3D */
     box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
 }
 
 .cancel-button {
     background-color: #555;
-    /* Gris oscuro para cancelar, combinando con el tema */
     color: #eee;
-    /* Texto claro */
 }
 
 .cancel-button:hover {
     background-color: #777;
-    /* Gris un poco más claro al pasar el ratón */
     transform: translateY(-2px);
-    /* Pequeño efecto 3D */
     box-shadow: 0 4px 10px rgba(85, 85, 85, 0.4);
 }

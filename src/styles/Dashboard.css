@@ -51,7 +51,7 @@
 .dashboard-button.export-button {
     background-color: #28ff85;
     display: inline-block;
-    color: #1e1e1e;
+    color: #fff;
     border: none;
     padding: 12px 20px;
     border-radius: 8px;
@@ -145,6 +145,11 @@
     border-color: #ff8b42;
 }
 
+.date-label {
+    font-family: inherit;
+    color: #fff;
+}
+
 /* --- Botón Borrar Filtros --- */
 .dashboard-button.reset-button {
     background-color: #6c757d;
@@ -214,9 +219,7 @@
     box-shadow: inset 0 0 10px #ff8b42;
 }
 
-/* ---------------------------------------------------- */
 /* Vista normal (6 columnas) */
-/* ---------------------------------------------------- */
 .reports-table-container th:nth-child(1),
 .reports-table-container td:nth-child(1) {
     flex-basis: 15%;
@@ -247,9 +250,7 @@
     flex-basis: 25%;
 }
 
-/* ---------------------------------------------------- */
 /* Vista admin (8 columnas) */
-/* ---------------------------------------------------- */
 .reports-table-container.admin-view table {
     min-width: 950px;
 }
@@ -294,7 +295,6 @@
     flex-basis: 25%;
 }
 
-/* ---------------------------------------------------- */
 /* SELECT del Rol */
 .role-cell select {
     padding: 6px;
@@ -419,4 +419,264 @@
     background-color: #218838;
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 0 15px #28a745, 0 0 25px #28a745;
+}
+
+/* --- Wrapper --- */
+.dashboard-wrapper {
+    padding: 20px;
+    background-color: #1e1e1e;
+    color: #fff;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-wrapper h2 {
+    color: #ff8b42;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 0 0 10px #ff8b42, 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Contenedor de Botones Principales --- */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* --- Botones --- */
+.dashboard-button.create-button,
+.dashboard-button.export-button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: fit-content;
+    min-width: 150px;
+    text-align: center;
+}
+
+.dashboard-button.create-button {
+    background-color: #ff8b42;
+    color: #fff;
+    box-shadow: 0 0 15px #ff8b42, 0 0 30px rgba(255, 139, 66, 0.5);
+}
+
+.dashboard-button.create-button:hover {
+    background-color: #e87a34;
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 0 25px #ff8b42, 0 0 40px rgba(255, 139, 66, 0.8);
+}
+
+.dashboard-button.export-button {
+    background-color: #28ff85;
+    color: #fff;
+    box-shadow: 0 0 15px #28ff85, 0 0 35px rgba(40, 255, 133, 0.5);
+}
+
+.dashboard-button.export-button:hover {
+    background-color: #1edc68;
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 0 25px #28ff85, 0 0 45px rgba(40, 255, 133, 0.8);
+}
+
+/* --- Checkbox Mostrar Mis Reportes --- */
+.show-my-reports-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* --- Filtros --- */
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 139, 66, 0.2);
+}
+
+.filters-container select,
+.filters-container input[type="date"] {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #666;
+    background-color: #4a4a4a;
+    color: #fff;
+}
+
+/* --- Botón Borrar Filtros --- */
+.dashboard-button.reset-button {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.dashboard-button.reset-button:hover {
+    background-color: #ff8b42;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 0 15px #ff8b42, 0 0 25px #ff8234;
+}
+
+/* --- Tabla de Reportes --- */
+.reports-table-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.reports-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 950px;
+}
+
+.reports-table-container tr {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    transition: all 0.35s ease;
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+/* --- Estados --- */
+.status-aprobado {
+    background-color: #28a745;
+}
+
+.status-pendiente {
+    background-color: #ffc107;
+    color: #333;
+}
+
+/* --- Botones de acción --- */
+.actions-cell {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    justify-content: flex-start;
+}
+
+.action-button {
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 60px;
+    transition: all 0.25s ease;
+}
+
+.locate-button {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.locate-button:hover {
+    background-color: #138496;
+    box-shadow: 0 0 15px #17a2b8, 0 0 25px #17a2b8;
+}
+
+/*  responsive  */
+
+@media (max-width: 992px) {
+    .filters-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters-container select,
+    .filters-container input[type="date"] {
+        width: 100%;
+    }
+
+    .buttons-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dashboard-button.create-button,
+    .dashboard-button.export-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-wrapper {
+        padding: 10px;
+    }
+
+    .dashboard-wrapper h2 {
+        font-size: 20px;
+    }
+
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .filters-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .filters-container select,
+    .filters-container input[type="date"] {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .dashboard-button.create-button,
+    .dashboard-button.export-button,
+    .dashboard-button.reset-button {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .reports-table-container table {
+        min-width: unset;
+    }
+
+    .reports-table-container tr {
+        flex-direction: column;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .reports-table-container th,
+    .reports-table-container td {
+        justify-content: center;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .actions-cell {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .action-button {
+        min-width: 80px;
+        margin-bottom: 6px;
+    }
 }

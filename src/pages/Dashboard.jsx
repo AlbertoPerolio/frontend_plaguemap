@@ -476,7 +476,7 @@ function Dashboard() {
           </select>
         )}
 
-        <label>
+        <label className="date-label">
           Fecha Inicio:
           <input
             type="date"
@@ -487,7 +487,7 @@ function Dashboard() {
           />
         </label>
 
-        <label>
+        <label className="date-label">
           Fecha Fin:
           <input
             type="date"
