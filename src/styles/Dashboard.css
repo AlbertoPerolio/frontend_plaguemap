@@ -5,7 +5,6 @@
     /* un poco más oscuro para efecto neón */
     color: #fff;
     min-height: 100vh;
-    font-family: 'Poppins', sans-serif;
 }
 
 .dashboard-wrapper h2 {
@@ -146,8 +145,8 @@
 }
 
 .date-label {
-    font-family: inherit;
-    color: #fff;
+    font-size: 14px;
+    margin-left: 1px
 }
 
 /* --- Botón Borrar Filtros --- */
