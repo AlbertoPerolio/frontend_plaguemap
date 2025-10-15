@@ -16,7 +16,7 @@ const MarkerActions = ({ marker, user, onEdit, onDelete, onApprove }) => {
     <div className="marker-actions">
       {/* Botón EDITAR: Llama a onEdit que espera el evento (e) del padre */}
       <button
-        // Ahora el padre (MarkerPopup) se encarga de llamar a e.stopPropagation()
+        // 🚨 Simplicado: Ahora el padre (MarkerPopup) se encarga de llamar a e.stopPropagation()
         onClick={onEdit}
       >
         Editar
@@ -24,7 +24,7 @@ const MarkerActions = ({ marker, user, onEdit, onDelete, onApprove }) => {
 
       {/* Botón ELIMINAR: Llama a onDelete que espera el evento (e) del padre */}
       <button
-        // Ahora el padre (MarkerPopup) se encarga de llamar a e.stopPropagation()
+        // 🚨 Simplicado: Ahora el padre (MarkerPopup) se encarga de llamar a e.stopPropagation()
         onClick={onDelete}
       >
         Eliminar
@@ -33,7 +33,7 @@ const MarkerActions = ({ marker, user, onEdit, onDelete, onApprove }) => {
       {/* Botón APROBAR (Solo Admin y Pendiente) */}
       {user.role === "admin" && marker.status === "pendiente" && (
         <button
-          // Llama a onApprove que espera el evento (e) del padre
+          // 🚨 CORRECCIÓN FINAL: Llama a onApprove que espera el evento (e) del padre
           onClick={onApprove}
         >
           Aprobar
