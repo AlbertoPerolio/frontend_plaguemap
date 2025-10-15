@@ -280,90 +280,116 @@ function Dashboard() {
   const exportToExcel = () => {
     if (!user || user.role !== "admin") return;
 
-    // --- Hoja 1: Datos de marcadores ---
-    const data = allMarkers.map((m) => ({
-      ID: m.idplague,
+    // --- Hoja 1: Todos los marcadores ---
+    const allMarkersData = allMarkers.map((m, index) => ({
+      ID: m.idplague || index + 1,
       Usuario: m.username,
       Estado: m.status,
-      "Fecha de creación": m.createdAt || m.created_at || "",
-      Valor: m.score || "", // si tenés un campo de score o valor
-      Comentarios: m.description || "",
+      FechaCreacion: m.createdAt || m.created_at || "",
+      FechaActualizacion: m.updatedAt || m.updated_at || "",
+      Titulo: m.title || "Sin Tipo",
+      Descripcion: m.description || "",
+      Latitud: m.lat,
+      Longitud: m.lng,
     }));
 
-    const wb = XLSX.utils.book_new();
+    const ws1 = XLSX.utils.json_to_sheet(allMarkersData);
 
-    const wsData = XLSX.utils.json_to_sheet(data);
-
-    // Ajuste de columnas para que no se corten
-    const wsCols = [
-      { wch: 10 }, // ID
-      { wch: 20 }, // Usuario
-      { wch: 12 }, // Estado
-      { wch: 15 }, // Fecha
-      { wch: 10 }, // Valor
-      { wch: 40 }, // Comentarios
-    ];
-    wsData["!cols"] = wsCols;
-
-    // Encabezados centrados y negrita
-    const range = XLSX.utils.decode_range(wsData["!ref"]);
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-      const cell = wsData[XLSX.utils.encode_cell({ r: 0, c: C })];
-      if (cell && !cell.s) cell.s = {};
-      cell.s = {
-        font: { bold: true },
-        alignment: { horizontal: "center" },
-      };
-    }
-
-    XLSX.utils.book_append_sheet(wb, wsData, "Marcadores");
+    // Ajuste automático de columnas
+    const wsCols = Object.keys(allMarkersData[0]).map((key) => ({
+      wch: Math.max(
+        key.length,
+        ...allMarkersData.map((row) =>
+          row[key] ? row[key].toString().length : 10
+        )
+      ),
+    }));
+    ws1["!cols"] = wsCols;
 
     // --- Hoja 2: Resumen estadístico ---
     const totalMarkers = allMarkers.length;
+    const estadoCounts = { aprobado: 0, pendiente: 0 };
+    const userCounts = {};
+    const titleCounts = {};
 
-    const statusCounts = allMarkers.reduce((acc, m) => {
-      acc[m.status] = (acc[m.status] || 0) + 1;
-      return acc;
-    }, {});
+    allMarkers.forEach((m) => {
+      // Estado
+      if (m.status === "aprobado") estadoCounts.aprobado += 1;
+      else estadoCounts.pendiente += 1;
 
-    const values = allMarkers.map((m) => Number(m.score || 0));
-    const promedio = values.length
-      ? (values.reduce((a, b) => a + b, 0) / values.length).toFixed(2)
-      : 0;
-    const maxValue = values.length ? Math.max(...values) : 0;
-    const minValue = values.length ? Math.min(...values) : 0;
+      // Usuario
+      userCounts[m.username] = (userCounts[m.username] || 0) + 1;
 
-    const uniqueUsers = new Set(allMarkers.map((m) => m.username));
-    const wsSummaryData = [
-      ["Total de marcadores", totalMarkers],
-      [],
-      ["Marcadores por estado"],
-      ...Object.entries(statusCounts),
-      [],
-      ["Promedio de Valor", promedio],
-      ["Valor máximo", maxValue],
-      ["Valor mínimo", minValue],
-      [],
-      ["Usuarios únicos", uniqueUsers.size],
+      // Titulo / Plaga
+      const title = m.title || "Sin Tipo";
+      titleCounts[title] = (titleCounts[title] || 0) + 1;
+    });
+
+    const resumenData = [
+      { Estadistica: "Total de marcadores", Valor: totalMarkers },
+      { Estadistica: "Marcadores aprobados", Valor: estadoCounts.aprobado },
+      { Estadistica: "Marcadores pendientes", Valor: estadoCounts.pendiente },
+      {
+        Estadistica: "Usuarios únicos con marcadores",
+        Valor: Object.keys(userCounts).length,
+      },
     ];
 
-    const wsSummary = XLSX.utils.aoa_to_sheet(wsSummaryData);
-    XLSX.utils.book_append_sheet(wb, wsSummary, "Resumen");
+    // Cantidad por usuario
+    Object.entries(userCounts).forEach(([username, count]) => {
+      resumenData.push({
+        Estadistica: `Marcadores de ${username}`,
+        Valor: count,
+      });
+    });
 
-    // --- Hoja 3: Datos para gráficos opcionales ---
-    const chartData = [
-      ["Estado", "Cantidad"],
-      ...Object.entries(statusCounts),
-      [],
-      ["Usuario", "Cantidad"],
-      ...Array.from(uniqueUsers).map((u) => [
-        u,
-        allMarkers.filter((m) => m.username === u).length,
-      ]),
+    // Cantidad por plaga
+    Object.entries(titleCounts).forEach(([title, count]) => {
+      resumenData.push({
+        Estadistica: `Marcadores tipo "${title}"`,
+        Valor: count,
+      });
+    });
+
+    const ws2 = XLSX.utils.json_to_sheet(resumenData);
+    ws2["!cols"] = [{ wch: 40 }, { wch: 15 }];
+
+    // --- Hoja 3: Gráficos opcionales ---
+    // XLSX no genera gráficos, pero podemos poner los datos listos
+    // Gráfico 1: Marcadores por estado
+    const chartEstadoData = [
+      { Estado: "Aprobado", Cantidad: estadoCounts.aprobado },
+      { Estado: "Pendiente", Cantidad: estadoCounts.pendiente },
     ];
-    const wsCharts = XLSX.utils.aoa_to_sheet(chartData);
-    XLSX.utils.book_append_sheet(wb, wsCharts, "Datos para gráficos");
+    // Gráfico 2: Marcadores por usuario
+    const chartUsuarioData = Object.entries(userCounts).map(
+      ([username, count]) => ({
+        Usuario: username,
+        Cantidad: count,
+      })
+    );
+    // Gráfico 3: Marcadores por plaga
+    const chartPlagaData = Object.entries(titleCounts).map(
+      ([title, count]) => ({
+        Plaga: title,
+        Cantidad: count,
+      })
+    );
 
+    const ws3 = XLSX.utils.book_new(); // solo usamos como hoja de datos
+    const ws3Estado = XLSX.utils.json_to_sheet(chartEstadoData);
+    const ws3Usuario = XLSX.utils.json_to_sheet(chartUsuarioData);
+    const ws3Plaga = XLSX.utils.json_to_sheet(chartPlagaData);
+
+    // --- Crear workbook y añadir hojas ---
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws1, "Todos los Marcadores");
+    XLSX.utils.book_append_sheet(wb, ws2, "Resumen Estadístico");
+    XLSX.utils.book_append_sheet(wb, ws3Estado, "Estado");
+    XLSX.utils.book_append_sheet(wb, ws3Usuario, "Usuarios");
+    XLSX.utils.book_append_sheet(wb, ws3Plaga, "Plagas");
+
+    // Guardar archivo
     XLSX.writeFile(wb, "estadistica_marcadores.xlsx");
   };
 
