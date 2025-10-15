@@ -41,7 +41,7 @@ function Dashboard() {
     username: "",
   });
 
-  // ------------------ Fetch Markers & Users ------------------
+  //  Fetch Markers & Users
   const fetchMarkers = useCallback(async () => {
     setLoading(true);
 
@@ -90,7 +90,7 @@ function Dashboard() {
     }
   }, []);
 
-  // ------------------ WebSockets ------------------
+  // WebSockets
   useEffect(() => {
     fetchMarkers();
 
@@ -112,7 +112,7 @@ function Dashboard() {
     };
   }, [fetchMarkers]);
 
-  // ------------------ Roles ------------------
+  //  Roles
   const handleRoleChange = (id_reg, newRole, username) => {
     if (id_reg === user.id_reg) {
       alert("No puedes cambiar tu propio rol desde el panel de reportes.");
@@ -186,7 +186,7 @@ function Dashboard() {
     return `¿Estás SEGURO de que quieres ${action} al usuario ${roleConfirm.username}? ${warning} Esta acción es irreversible.`;
   };
 
-  // ------------------ Modales ------------------
+  // Modales
   const openImageModal = (imageUrl) => setModalImage(imageUrl);
   const closeImageModal = () => setModalImage(null);
 
@@ -215,7 +215,7 @@ function Dashboard() {
     fetchMarkers();
   };
 
-  // ------------------ Filtros ------------------
+  //  Filtros
   const handleClearFilters = () => {
     setFilters({
       status: user?.role === "admin" ? "all" : "approved",
@@ -276,11 +276,11 @@ function Dashboard() {
     return Array.from(plagues);
   }, [allMarkers]);
 
-  // ------------------ Exportar Excel con Estadísticas ------------------
+  //  Exportar Excel con Estadísticas
   const exportToExcel = () => {
     if (!user || user.role !== "admin") return;
 
-    // --- Hoja 1: Todos los marcadores ---
+    //  Hoja 1: Todos los marcadores
     const allMarkersData = allMarkers.map((m, index) => ({
       ID: m.idplague || index + 1,
       Usuario: m.username,
@@ -306,7 +306,7 @@ function Dashboard() {
     }));
     ws1["!cols"] = wsCols;
 
-    // --- Hoja 2: Resumen estadístico ---
+    //  Hoja 2: Resumen estadístico
     const totalMarkers = allMarkers.length;
     const estadoCounts = { aprobado: 0, pendiente: 0 };
     const userCounts = {};
@@ -354,8 +354,7 @@ function Dashboard() {
     const ws2 = XLSX.utils.json_to_sheet(resumenData);
     ws2["!cols"] = [{ wch: 40 }, { wch: 15 }];
 
-    // --- Hoja 3: Gráficos opcionales ---
-    // XLSX no genera gráficos, pero podemos poner los datos listos
+    //  Hoja 3: Gráficos opcionales
     // Gráfico 1: Marcadores por estado
     const chartEstadoData = [
       { Estado: "Aprobado", Cantidad: estadoCounts.aprobado },
@@ -381,7 +380,7 @@ function Dashboard() {
     const ws3Usuario = XLSX.utils.json_to_sheet(chartUsuarioData);
     const ws3Plaga = XLSX.utils.json_to_sheet(chartPlagaData);
 
-    // --- Crear workbook y añadir hojas ---
+    //  Crear workbook y añadir hojas
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws1, "Todos los Marcadores");
     XLSX.utils.book_append_sheet(wb, ws2, "Resumen Estadístico");

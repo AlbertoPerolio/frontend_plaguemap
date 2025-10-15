@@ -56,7 +56,7 @@ const MarkerPopup = forwardRef(
                 alt="Marcador"
                 style={{ cursor: "pointer", maxWidth: "100%", height: "auto" }}
                 onClick={(e) => {
-                  e.stopPropagation(); // 👈 ¡Esto evita que el clic llegue al mapa!
+                  e.stopPropagation();
                   openImageModal(marker.imgurl);
                 }}
               />
@@ -66,11 +66,9 @@ const MarkerPopup = forwardRef(
             <p>Latitud: {marker.lat}</p>
             <p>Longitud: {marker.lng}</p>
 
-            {/*Pasamos los manejadores de eventos envueltos */}
             <MarkerActions
               marker={marker}
               user={user}
-              // Envolvemos las funciones en handleActionClick
               onEdit={(e) => handleActionClick(e, onEdit, marker.idplague)}
               onDelete={(e) => handleActionClick(e, onDelete, marker.idplague)}
               onApprove={(e) =>
@@ -89,7 +87,6 @@ const MarkerPopup = forwardRef(
         };
       }
     }, [marker, user, onEdit, onDelete, onApprove, openImageModal]);
-    // handleActionClick se añade como dependencia.
 
     return (
       <Marker

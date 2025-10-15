@@ -39,7 +39,6 @@ function Profile() {
     }
   };
 
-  // Componente para mensajes con autodesaparición
   const Message = ({ type, text, clearMessage }) => {
     useEffect(() => {
       if (text) {

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await loginRequest(userData); // loginRequest ya incluye withCredentials
 
-      // ✅ Usamos directamente el usuario que devuelve el backend
+      // Usamos directamente el usuario que devuelve el backend
       setUser(res.user);
       setIsAuthenticated(true);
       setErrors({});

@@ -15,7 +15,7 @@ function InfPlag() {
     }
   }, [hash]);
 
-  // 🔹 Datos de todas las plagas incluyendo las nuevas
+  //  Datos de todas las plagas incluyendo las nuevas
   const plagas = [
     {
       id: "dengue",
@@ -315,7 +315,7 @@ function InfPlag() {
         </div>
       </div>
 
-      {/* 🔹 Renderizado dinámico de cada plaga */}
+      {/*  Renderizado dinámico de cada plaga */}
       {plagas.map((plaga) => (
         <PlagaSection key={plaga.id} {...plaga} />
       ))}

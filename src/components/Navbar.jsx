@@ -63,7 +63,7 @@ function Navbar({ hideExtraButtons }) {
               </Link>
             </div>
 
-            {/* Botón menú responsive */}
+            {/* Botón menú */}
             <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
               <FaBars />
             </div>

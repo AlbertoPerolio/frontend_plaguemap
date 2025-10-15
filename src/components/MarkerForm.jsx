@@ -47,7 +47,7 @@ function MarkerForm({
     }
   }, [markerToEdit]);
 
-  // 🚨 Función que ejecuta la llamada a la API después de la confirmación
+  // Función que ejecuta la llamada a la API después de la confirmación
   const executeApiAction = async (dataToSubmit) => {
     setLoading(true);
     setError(null);
@@ -80,7 +80,7 @@ function MarkerForm({
     });
   };
 
-  // 🚨 Función que prepara y envía los datos al modal
+  // Función que prepara y envía los datos al modal
   const handleSubmit = async (e) => {
     e.preventDefault();
 
