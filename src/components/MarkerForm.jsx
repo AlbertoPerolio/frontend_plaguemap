@@ -29,13 +29,17 @@ function MarkerForm({
   const lng = position ? position.lng : "";
   const isEditing = !!markerToEdit;
 
-  const opcionesTitulo = ["Dengue", "Zika", "Leishmaniasis", "Chikunguña"];
+  const opcionesTitulo = [
+    "Microbasurales",
+    "Terrenos Baldíos",
+    "Recipientes con Agua",
+    "Acumulación de Agua",
+  ];
 
   useEffect(() => {
     if (markerToEdit) {
       setTitle(markerToEdit.title);
       setDescription(markerToEdit.description);
-      // No restauramos 'image' ya que es un campo de archivo (file input)
     } else {
       setTitle("");
       setDescription("");
@@ -119,7 +123,6 @@ function MarkerForm({
       dataToSubmit.append("status", "pendiente");
       dataToSubmit.append("lat", lat);
       dataToSubmit.append("lng", lng);
-      // Ya se validó que 'image' existe antes de este punto
       dataToSubmit.append("image", image);
     }
 
@@ -153,14 +156,16 @@ function MarkerForm({
     <div className="marker-form">
       <h3>{isEditing ? "Editar marcador" : "Nuevo marcador"}</h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <label htmlFor="titulo">Título</label>
+        <label htmlFor="titulo">Zona critica</label>
         <select
           id="titulo"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         >
-          <option value="">Selecciona un título...</option>
+          <option value="">
+            Selecciona una de las diferentes zonas criticas
+          </option>
           {opcionesTitulo.map((op) => (
             <option key={op} value={op}>
               {op}
@@ -169,7 +174,7 @@ function MarkerForm({
         </select>
 
         <input
-          placeholder="Descripción"
+          placeholder="Ingrese una Descripción de la zona o de lo que se ve en la imagen"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required

@@ -12,7 +12,7 @@ export const loginRequest = async (user) => {
       const verifyRes = await axios.get("/auth/verify", {
         withCredentials: true,
       });
-      console.log("Token verificado:");
+      console.log("Token verificado");
     } catch (err) {
       console.warn("Error al verificar token tras login:", err);
     }
