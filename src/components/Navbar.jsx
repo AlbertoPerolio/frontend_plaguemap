@@ -2,23 +2,22 @@ import "../styles/Navbar.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa"; // 📦 icono del menú (hamburguesa)
 
 function Navbar({ hideExtraButtons }) {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Estado para el botón "Ir arriba"
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-
-  // Estado para el menú móvil
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // ✅ Estado del menú
 
   useEffect(() => {
     if (hideExtraButtons) return;
 
     const handleScroll = () => {
-      setShowScrollToTop(window.scrollY > 100);
+      const scrollThreshold = 100;
+      setShowScrollToTop(window.scrollY > scrollThreshold);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -36,10 +35,12 @@ function Navbar({ hideExtraButtons }) {
       const element = document.getElementById(id);
       if (element) element.scrollIntoView({ behavior: "smooth" });
     }
+    setMenuOpen(false); // ✅ Cierra el menú al hacer clic
   };
 
   return (
     <div>
+      {/* Botón "ir arriba" */}
       {!hideExtraButtons && showScrollToTop && (
         <button
           className="btn-up"
@@ -55,20 +56,28 @@ function Navbar({ hideExtraButtons }) {
 
       <div className="header">
         <nav className="navbar">
-          <div className="div-logo">
-            <Link to="/" className="logo">
-              Mapa de Plagas
-            </Link>
+          {/* ✅ Nuevo contenedor superior */}
+          <div className="navbar-top">
+            <div className="div-logo">
+              <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
+                Mapa de Plagas
+              </Link>
+            </div>
+
+            {/* ✅ Botón menú responsive */}
+            <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
+              <FaBars />
+            </div>
           </div>
 
-          {/* Botón de menú para móviles */}
-          <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
-            ☰
-          </div>
-
+          {/* ✅ Lista del menú */}
           <ul className={`nav-list ${menuOpen ? "active" : ""}`}>
             <li className="nav-item">
-              <Link to="/" className="nav-link">
+              <Link
+                to="/"
+                className="nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
                 Inicio
               </Link>
             </li>
@@ -77,7 +86,7 @@ function Navbar({ hideExtraButtons }) {
                 className="nav-link"
                 onClick={() => handleScrollTo("Mas_informacion")}
               >
-                Mas Información
+                Más Información
               </p>
             </li>
             <li className="nav-item">
@@ -86,7 +95,11 @@ function Navbar({ hideExtraButtons }) {
               </p>
             </li>
             <li className="nav-item">
-              <Link to="/plagueMap" className="btn-navbar">
+              <Link
+                to="/plagueMap"
+                className="btn-navbar"
+                onClick={() => setMenuOpen(false)}
+              >
                 Plague Map
               </Link>
             </li>
@@ -94,17 +107,32 @@ function Navbar({ hideExtraButtons }) {
             {isAuthenticated ? (
               <>
                 <li className="nav-item">
-                  <Link to="/profile" className="btn-navbar">
+                  <Link
+                    to="/profile"
+                    className="btn-navbar"
+                    onClick={() => setMenuOpen(false)}
+                  >
                     Perfil de {user.name}
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/dashboard" className="btn-navbar">
+                  <Link
+                    to="/dashboard"
+                    className="btn-navbar"
+                    onClick={() => setMenuOpen(false)}
+                  >
                     Dashboard
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/" onClick={() => logout()} className="btn-navbar">
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      logout();
+                      setMenuOpen(false);
+                    }}
+                    className="btn-navbar"
+                  >
                     Salir
                   </Link>
                 </li>
@@ -112,12 +140,20 @@ function Navbar({ hideExtraButtons }) {
             ) : (
               <>
                 <li className="nav-item">
-                  <Link to="/login" className="btn-navbar">
+                  <Link
+                    to="/login"
+                    className="btn-navbar"
+                    onClick={() => setMenuOpen(false)}
+                  >
                     Iniciar Sesión
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/register" className="btn-navbar">
+                  <Link
+                    to="/register"
+                    className="btn-navbar"
+                    onClick={() => setMenuOpen(false)}
+                  >
                     Registrarte
                   </Link>
                 </li>
