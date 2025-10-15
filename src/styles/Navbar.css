@@ -10,6 +10,12 @@
     cursor: pointer;
     font-size: 28px;
     color: white;
+    user-select: none;
+    transition: 0.3s ease;
+}
+
+.menu:hover {
+    color: #f4813f;
 }
 
 .btn-up {
@@ -28,7 +34,6 @@
     z-index: 9999;
     border: none;
     cursor: pointer;
-
 }
 
 .btn-up:hover {
@@ -69,6 +74,7 @@
     align-items: center;
     list-style: none;
     gap: 20px;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .nav-item {
@@ -122,7 +128,7 @@
     border: 1px solid rgb(255, 129, 57);
 }
 
-/*responsive*/
+/* Responsive */
 @media (max-width: 992px) {
     .header {
         padding: 10px 20px;
@@ -152,17 +158,22 @@
         align-items: flex-start;
     }
 
+    /* Menú móvil oculto por defecto */
     .nav-list {
         flex-direction: column;
         width: 100%;
         display: none;
-        /* Se oculta por defecto */
+        overflow: hidden;
+        max-height: 0;
         gap: 10px;
     }
 
+    /* Menú activo */
     .nav-list.active {
         display: flex;
-        /* Se muestra al abrir el menú */
+        max-height: 500px;
+        /* Ajustable según cantidad de items */
+        opacity: 1;
     }
 
     .nav-item {
