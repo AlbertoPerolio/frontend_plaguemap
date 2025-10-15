@@ -141,7 +141,7 @@ function Dashboard() {
       socket.off("marker_deleted", onMarkerChange);
       socket.off("marker_updated", onMarkerChange);
     };
-  }, [userList]);
+  }, []);
 
   // ------------------ Roles ------------------
   const handleRoleChange = (id_reg, newRole, username) => {
