@@ -15,15 +15,25 @@
     text-shadow: 0 0 10px #ff8b42, 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/* --- Contenedor de Botones Principales --- */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    /* separación entre botones */
+    margin-bottom: 20px;
+}
+
 /* --- Botón de Creación --- */
 .dashboard-button.create-button {
     background-color: #ff8b42;
+    display: inline-block;
     color: #fff;
     border: none;
     padding: 12px 20px;
     border-radius: 8px;
     cursor: pointer;
-    margin: 0 auto 20px auto;
+    margin: 0;
     font-weight: 600;
     display: block;
     width: fit-content;
@@ -40,12 +50,13 @@
 /* --- Botón de Estadísticas --- */
 .dashboard-button.export-button {
     background-color: #28ff85;
+    display: inline-block;
     color: #1e1e1e;
     border: none;
     padding: 12px 20px;
     border-radius: 8px;
     cursor: pointer;
-    margin: 0 auto 20px;
+    margin: 0;
     font-weight: 600;
     display: block;
     width: fit-content;
