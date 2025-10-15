@@ -164,3 +164,73 @@
   background: #f4813f;
   box-shadow: 0px 1px 20px #f4813f;
 }
+
+/*responsive*/
+@media (max-width: 992px) {
+  .login {
+    padding: 40px 20px;
+  }
+
+  .heading-login {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .login-field label {
+    width: 90px;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+
+  .loginForm input {
+    padding: 14px 18px;
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+
+  .btn-login,
+  .nc-t {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .login {
+    padding: 30px 15px;
+    border-radius: 5px;
+  }
+
+  .heading-login {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .login-field {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .login-field label {
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  .loginForm {
+    width: 100%;
+  }
+
+  .loginForm input {
+    width: 100%;
+  }
+
+  .btn-login,
+  .nc-t {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    margin: 15px 0;
+  }
+}
