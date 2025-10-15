@@ -10,14 +10,9 @@
     cursor: pointer;
     font-size: 28px;
     color: white;
-    user-select: none;
-    transition: 0.3s ease;
 }
 
-.menu:hover {
-    color: #f4813f;
-}
-
+/* Botón de subir */
 .btn-up {
     position: fixed;
     width: auto;
@@ -55,15 +50,12 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    width: 100%;
 }
 
 .logo {
     font-weight: 700;
     font-size: 28px;
     color: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
 }
 
 .logo:hover {
@@ -77,7 +69,6 @@
     align-items: center;
     list-style: none;
     gap: 20px;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .nav-item {
@@ -158,27 +149,31 @@
 @media (max-width: 576px) {
     .navbar {
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        align-items: stretch;
     }
 
-    /* Menú móvil oculto por defecto */
+    /* Contenedor superior: logo + botón menú */
+    .navbar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* ✅ Logo y botón al mismo nivel */
+        width: 100%;
+    }
+
     .nav-list {
         flex-direction: column;
         width: 100%;
         display: none;
-        overflow: hidden;
-        max-height: 0;
+        /* Oculta por defecto */
         gap: 10px;
         align-items: center;
+        margin-top: 10px;
     }
 
-    /* Menú activo */
     .nav-list.active {
         display: flex;
-        max-height: 500px;
-        opacity: 1;
-        align-items: center;
+        /* Muestra al abrir el menú */
     }
 
     .nav-item {
@@ -197,6 +192,5 @@
     /* Mostrar botón de menú */
     .menu {
         display: block;
-        margin-left: 0;
     }
 }
