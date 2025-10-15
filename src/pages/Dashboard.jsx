@@ -8,6 +8,7 @@ import {
 } from "../api/markers";
 import { getUsersRequest, updateUserRoleRequest } from "../api/users";
 import socket from "../api/socket";
+import * as XLSX from "xlsx";
 
 import "../styles/Dashboard.css";
 import ImageModal from "../components/ImageModal";
@@ -275,6 +276,27 @@ function Dashboard() {
     return Array.from(plagues);
   }, [allMarkers]);
 
+  // ------------------ Exportar Excel ------------------
+  const exportToExcel = () => {
+    if (!user || user.role !== "admin") return;
+
+    const data = allMarkers.map((m) => ({
+      Usuario: m.username,
+      Rol: m.userRole,
+      Plaga: m.title || "Sin Tipo",
+      Descripción: m.description || "",
+      Estado: m.status,
+      Fecha: m.createdAt || m.created_at || "",
+      Latitud: m.lat,
+      Longitud: m.lng,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Marcadores");
+    XLSX.writeFile(workbook, "estadistica_marcadores.xlsx");
+  };
+
   // ------------------ Render ------------------
   if (loading)
     return <div className="dashboard-wrapper">Cargando reportes...</div>;
@@ -287,13 +309,35 @@ function Dashboard() {
           : "Mis Reportes y Aprobados"}
       </h2>
 
-      <button
-        className="dashboard-button create-button"
-        onClick={() => navigate("/PlagueMap", { state: { action: "create" } })}
+      {/* --- Botones de acción --- */}
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
       >
-        Crear Nuevo Reporte
-      </button>
+        <button
+          className="dashboard-button create-button"
+          onClick={() =>
+            navigate("/PlagueMap", { state: { action: "create" } })
+          }
+        >
+          Crear Nuevo Reporte
+        </button>
 
+        {user?.role === "admin" && (
+          <button
+            className="dashboard-button export-button"
+            onClick={exportToExcel}
+          >
+            Exportar Estadística
+          </button>
+        )}
+      </div>
+
+      {/* --- Filtros --- */}
       <div className="filters-container">
         <label className="show-my-reports-container">
           <input
@@ -366,6 +410,7 @@ function Dashboard() {
         </button>
       </div>
 
+      {/* --- Tabla de reportes --- */}
       <div
         className={`reports-table-container ${
           user?.role === "admin" ? "admin-view" : ""
@@ -387,9 +432,7 @@ function Dashboard() {
           <tbody>
             {filteredMarkers.map((marker) => (
               <tr key={marker.idplague}>
-                {user?.role === "admin" && (
-                  <td className="user-cell">{marker.username}</td>
-                )}
+                {user?.role === "admin" && <td>{marker.username}</td>}
                 {user?.role === "admin" && (
                   <td className="role-cell">
                     <select
@@ -421,7 +464,6 @@ function Dashboard() {
                         alt="Preview"
                         width="50"
                         height="50"
-                        style={{ cursor: "pointer" }}
                       />
                     </button>
                   ) : (
@@ -447,7 +489,6 @@ function Dashboard() {
                   >
                     Ir a Mapa
                   </button>
-
                   {(user?.role === "admin" ||
                     marker.id_reg === user?.id_reg) && (
                     <>
@@ -465,7 +506,6 @@ function Dashboard() {
                       </button>
                     </>
                   )}
-
                   {user?.role === "admin" && marker.status === "pendiente" && (
                     <button
                       onClick={() => handleApprove(marker.idplague)}

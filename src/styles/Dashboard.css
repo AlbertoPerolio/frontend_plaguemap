@@ -31,6 +31,27 @@
     transition: all 0.3s ease;
 }
 
+/* --- Botón de Estadísticas --- */
+.dashboard-button.export-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: block;
+    width: fit-content;
+    box-shadow: 0 0 15px #28a745, 0 0 30px rgba(40, 167, 69, 0.5);
+    transition: all 0.3s ease;
+}
+
+.dashboard-button.export-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 0 25px #28a745, 0 0 40px rgba(40, 167, 69, 0.8);
+}
+
 .dashboard-button.create-button:hover {
     background-color: #e87a34;
     transform: translateY(-2px) scale(1.08);
@@ -125,9 +146,9 @@
 }
 
 .dashboard-button.reset-button:hover {
-    background-color: #5a6268;
+    background-color: #ff8b42;
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 0 15px #6c757d, 0 0 25px rgba(108, 117, 125, 0.7);
+    box-shadow: 0 0 15px #ff8b42, 0 0 25px #ff8234;
 }
 
 /* --- Tabla de Reportes con efecto 3D --- */
