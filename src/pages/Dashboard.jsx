@@ -476,28 +476,29 @@ function Dashboard() {
           </select>
         )}
 
-        <label className="date-label">
-          Fecha Inicio:
-          <input
-            type="date"
-            value={filters.startDate}
-            onChange={(e) =>
-              setFilters((prev) => ({ ...prev, startDate: e.target.value }))
-            }
-          />
-        </label>
+        <div className="date-label-content">
+          <label>
+            Fecha Inicio:
+            <input
+              type="date"
+              value={filters.startDate}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, startDate: e.target.value }))
+              }
+            />
+          </label>
 
-        <label className="date-label">
-          Fecha Fin:
-          <input
-            type="date"
-            value={filters.endDate}
-            onChange={(e) =>
-              setFilters((prev) => ({ ...prev, endDate: e.target.value }))
-            }
-          />
-        </label>
-
+          <label>
+            Fecha Fin:
+            <input
+              type="date"
+              value={filters.endDate}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, endDate: e.target.value }))
+              }
+            />
+          </label>
+        </div>
         <button
           className="dashboard-button reset-button"
           onClick={handleClearFilters}

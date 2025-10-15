@@ -114,7 +114,6 @@
     background: radial-gradient(circle, rgba(255, 140, 66, 0.15), transparent 70%);
     transition: top 0.5s;
     pointer-events: none;
-    /* ✅ evita bloquear los inputs */
     z-index: 0;
 }
 
