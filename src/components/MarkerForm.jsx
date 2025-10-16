@@ -32,6 +32,7 @@ function MarkerForm({
   const opcionesTitulo = [
     "Microbasurales",
     "Terrenos Baldíos",
+    "Chatarra",
     "Recipientes con Agua",
     "Acumulación de Agua",
   ];
