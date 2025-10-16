@@ -308,7 +308,7 @@ function InfPlag() {
             </p>
           </div>
           <img
-            src={require("../img/logo2-terciario6039")}
+            src={require("../img/logo2-terciario6039.png")}
             className="img-read"
             alt="Persona enferma"
           />

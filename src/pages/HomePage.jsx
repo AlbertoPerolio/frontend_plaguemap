@@ -67,7 +67,7 @@ function HomePage() {
           <div className="content-home2">
             <div className="home-image">
               <img
-                src={require("../img/logo2-terciario6039")}
+                src={require("../img/logo2-terciario6039.png")}
                 alt="img-home"
                 className="img-home"
               />
