@@ -157,16 +157,14 @@ function MarkerForm({
     <div className="marker-form">
       <h3>{isEditing ? "Editar marcador" : "Nuevo marcador"}</h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <label htmlFor="titulo">Zona critica</label>
+        <label htmlFor="titulo">Sitio critico</label>
         <select
           id="titulo"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         >
-          <option value="">
-            Selecciona una de las diferentes zonas criticas
-          </option>
+          <option value="">Seleccione uno de los sitios criticos</option>
           {opcionesTitulo.map((op) => (
             <option key={op} value={op}>
               {op}

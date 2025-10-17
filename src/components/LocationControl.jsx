@@ -42,7 +42,6 @@ function LocationControl({
   }, [map, setNewMarkerPosition, setTemporaryMarker, setShowForm]);
 
   useEffect(() => {
-    // DEVOLVEMOS LA FUNCIÓN AL PADRE UNA VEZ QUE EL MAPA ESTÁ LISTO
     if (onLocateReady) {
       onLocateReady(handleGeolocate);
     }
@@ -52,12 +51,15 @@ function LocationControl({
       const btn = L.DomUtil.create("button", "btn-locate");
       btn.innerHTML = "📍";
 
-      L.DomEvent.on(btn, "click", L.DomEvent.stopPropagation);
-      L.DomEvent.on(btn, "click", L.DomEvent.preventDefault);
+      L.DomEvent.on(btn, "click", (e) => {
+        L.DomEvent.stopPropagation(e);
+        L.DomEvent.preventDefault(e);
+        handleGeolocate(e);
+      });
 
-      btn.onclick = handleGeolocate;
       return btn;
     };
+
     locateControl.addTo(map);
 
     return () => {
