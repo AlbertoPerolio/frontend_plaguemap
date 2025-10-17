@@ -325,7 +325,11 @@ function PlagueMap() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <GeocoderControl />
-        <LocationControl onGeolocate={handleGeolocateAndOpenForm} />
+        <LocationControl
+          setNewMarkerPosition={setNewMarkerPosition}
+          setTemporaryMarker={setTemporaryMarker}
+          setShowForm={setShowForm}
+        />
         <MapClickHandler
           user={user}
           setShowForm={setShowForm}
