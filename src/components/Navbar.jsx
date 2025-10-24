@@ -59,7 +59,7 @@ function Navbar({ hideExtraButtons }) {
           <div className="navbar-top">
             <div className="div-logo">
               <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
-                Mapa de Plagas
+                Escuela Centinela
               </Link>
             </div>
 
@@ -73,33 +73,11 @@ function Navbar({ hideExtraButtons }) {
           <ul className={`nav-list ${menuOpen ? "active" : ""}`}>
             <li className="nav-item">
               <Link
-                to="/"
-                className="nav-link"
-                onClick={() => setMenuOpen(false)}
-              >
-                Inicio
-              </Link>
-            </li>
-            <li className="nav-item">
-              <p
-                className="nav-link"
-                onClick={() => handleScrollTo("Mas_informacion")}
-              >
-                Más Información
-              </p>
-            </li>
-            <li className="nav-item">
-              <p className="nav-link" onClick={() => handleScrollTo("plagas")}>
-                Plagas
-              </p>
-            </li>
-            <li className="nav-item">
-              <Link
                 to="/plagueMap"
                 className="btn-navbar"
                 onClick={() => setMenuOpen(false)}
               >
-                Plague Map
+                Ver Mapa
               </Link>
             </li>
             {isAuthenticated ? (
@@ -119,7 +97,7 @@ function Navbar({ hideExtraButtons }) {
                     className="btn-navbar"
                     onClick={() => setMenuOpen(false)}
                   >
-                    Dashboard
+                    Panel de control
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -131,7 +109,7 @@ function Navbar({ hideExtraButtons }) {
                     }}
                     className="btn-navbar"
                   >
-                    Salir
+                    Cerrar Sesión
                   </Link>
                 </li>
               </>
