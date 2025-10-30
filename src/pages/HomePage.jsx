@@ -77,15 +77,13 @@ function HomePage() {
                 Mapa sobre <span className="home-span">Plagas</span>
               </h1>
               <p className="para-home">Página para localizar plagas</p>
-              <a href="#plagas" className="home-links btn-2">
-                <Link
-                  to="/login"
-                  className="btn-navbar"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Iniciar Sesión
-                </Link>
-              </a>
+              <Link
+                to="/login"
+                className="home-link btn-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                Iniciar Sesión
+              </Link>
             </div>
           </div>
         </div>
