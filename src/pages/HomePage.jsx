@@ -78,7 +78,13 @@ function HomePage() {
               </h1>
               <p className="para-home">Página para localizar plagas</p>
               <a href="#plagas" className="home-links btn-2">
-                Explorar
+                <Link
+                  to="/login"
+                  className="btn-navbar"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Iniciar Sesión
+                </Link>
               </a>
             </div>
           </div>
