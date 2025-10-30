@@ -77,8 +77,8 @@ function HomePage() {
                 Mapa sobre <span className="home-span">Plagas</span>
               </h1>
               <p className="para-home">Página para localizar plagas</p>
-              <a href="/login" className="home-links btn-2">
-                Explorar
+              <a href="/register" className="home-links btn-2">
+                Crear Cuenta
               </a>
             </div>
           </div>
