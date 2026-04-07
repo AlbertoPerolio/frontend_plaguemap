@@ -27,7 +27,9 @@ function RegisterPage() {
         <form onSubmit={onSubmit}>
           <h3 className="heading-register">Crear una cuenta</h3>
           <div className="register">
-            {<div className="text-exist">{registerErrors.body?.mensaje}</div>}
+            {registerErrors?.message && (
+              <div className="text-exist">{registerErrors.message}</div>
+            )}
             <div className="register-field">
               <label>Nombre:</label>
               <input
