@@ -59,7 +59,7 @@ function Navbar({ hideExtraButtons }) {
           <div className="navbar-top">
             <div className="div-logo">
               <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
-                Escuela Centinela
+                Mapa Zonas Criticas
               </Link>
             </div>
 
@@ -130,7 +130,7 @@ function Navbar({ hideExtraButtons }) {
                     className="btn-navbar"
                     onClick={() => setMenuOpen(false)}
                   >
-                    Registrarte
+                    Crear Cuenta
                   </Link>
                 </li>
               </>
