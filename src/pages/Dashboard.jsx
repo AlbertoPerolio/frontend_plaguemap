@@ -51,12 +51,12 @@ function Dashboard() {
       users = Array.isArray(usersResponse.data?.body)
         ? usersResponse.data.body
         : Array.isArray(usersResponse.data)
-        ? usersResponse.data
-        : [];
+          ? usersResponse.data
+          : [];
       setUserList(users);
     } catch (error) {
       console.warn(
-        "Fallo al cargar usuarios (posiblemente por permisos de admin). Continuando sin nombres de usuario..."
+        "Fallo al cargar usuarios (posiblemente por permisos de admin). Continuando sin nombres de usuario...",
       );
     }
 
@@ -64,7 +64,7 @@ function Dashboard() {
       users.map((u) => [
         u.id_reg.toString(),
         { username: u.name, role: u.role },
-      ])
+      ]),
     );
 
     try {
@@ -136,24 +136,24 @@ function Dashboard() {
           prevUsers.map((u) =>
             u.id_reg === roleConfirm.id_reg
               ? { ...u, role: roleConfirm.newRole }
-              : u
-          )
+              : u,
+          ),
         );
 
         setAllMarkers((prevMarkers) =>
           prevMarkers.map((marker) =>
             marker.id_reg === roleConfirm.id_reg
               ? { ...marker, userRole: roleConfirm.newRole }
-              : marker
-          )
+              : marker,
+          ),
         );
       } catch (error) {
         console.error(
           "Error al actualizar el rol:",
-          error.response?.data || error
+          error.response?.data || error,
         );
         alert(
-          "Hubo un error al intentar cambiar el rol. Verifica tu conexión y permisos."
+          "Hubo un error al intentar cambiar el rol. Verifica tu conexión y permisos.",
         );
       }
     }
@@ -233,13 +233,13 @@ function Dashboard() {
 
     if (user.role === "admin" && filters.status !== "all") {
       currentMarkers = currentMarkers.filter(
-        (m) => m.status === filters.status
+        (m) => m.status === filters.status,
       );
     }
 
     if (filters.plagueType !== "all") {
       currentMarkers = currentMarkers.filter(
-        (m) => m.title === filters.plagueType
+        (m) => m.title === filters.plagueType,
       );
     }
 
@@ -263,7 +263,7 @@ function Dashboard() {
 
     if (user.role !== "admin") {
       currentMarkers = currentMarkers.filter(
-        (m) => m.status === "aprobado" || m.id_reg === user.id_reg
+        (m) => m.status === "aprobado" || m.id_reg === user.id_reg,
       );
     }
 
@@ -300,8 +300,8 @@ function Dashboard() {
       wch: Math.max(
         key.length,
         ...allMarkersData.map((row) =>
-          row[key] ? row[key].toString().length : 10
-        )
+          row[key] ? row[key].toString().length : 10,
+        ),
       ),
     }));
     ws1["!cols"] = wsCols;
@@ -365,14 +365,14 @@ function Dashboard() {
       ([username, count]) => ({
         Usuario: username,
         Cantidad: count,
-      })
+      }),
     );
     // Gráfico 3: Marcadores por plaga
     const chartPlagaData = Object.entries(titleCounts).map(
       ([title, count]) => ({
         Plaga: title,
         Cantidad: count,
-      })
+      }),
     );
 
     const ws3 = XLSX.utils.book_new(); // solo usamos como hoja de datos
@@ -454,7 +454,7 @@ function Dashboard() {
             setFilters((prev) => ({ ...prev, plagueType: e.target.value }))
           }
         >
-          <option value="all">Todas las Plagas</option>
+          <option value="all">Zonas criticas</option>
           {uniquePlagues.map((plague) => (
             <option key={plague} value={plague}>
               {plague}
@@ -537,7 +537,7 @@ function Dashboard() {
                         handleRoleChange(
                           marker.id_reg,
                           e.target.value,
-                          marker.username
+                          marker.username,
                         )
                       }
                       disabled={marker.id_reg === user.id_reg}
@@ -574,7 +574,7 @@ function Dashboard() {
                 <td>
                   {marker.createdAt || marker.created_at
                     ? new Date(
-                        marker.createdAt || marker.created_at
+                        marker.createdAt || marker.created_at,
                       ).toLocaleDateString()
                     : "Sin Fecha"}
                 </td>
