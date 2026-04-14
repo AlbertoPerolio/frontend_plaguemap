@@ -90,7 +90,7 @@ function HomePage() {
         <div className="about-us-container">
           <div className="about-us">
             <div className="about-left">
-              <h3 className="heading-about">Dengue</h3>
+              <h3 className="heading-about">Mosquitos</h3>
               <p className="para-about">
                 Actualmente se conocen muchas plagas que están en Aguaray, como
                 Dengue, Zika, Leishmaniasis, Chikunguña, Oropuche y Mayaro. Esta
