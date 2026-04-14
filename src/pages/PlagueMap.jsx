@@ -31,7 +31,7 @@ const MARKER_ICON_BASE =
   "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img";
 
 const approvedIcon = L.icon({
-  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-blue.png`,
+  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-green.png`,
   shadowUrl: `${MARKER_ICON_BASE}/marker-shadow.png`,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -113,10 +113,10 @@ function PlagueMap() {
         !user
           ? m.status === "aprobado"
           : user.role === "admin"
-          ? true
-          : m.status === "aprobado" || m.id_reg === user.id_reg
+            ? true
+            : m.status === "aprobado" || m.id_reg === user.id_reg,
       ),
-    [user]
+    [user],
   );
 
   // --- FETCH MARKERS ---
@@ -148,7 +148,7 @@ function PlagueMap() {
         alert("No se pudo obtener la ubicación. Haz clic en el mapa.");
         setShowForm(true);
       },
-      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
     );
   }, []);
 
@@ -160,7 +160,7 @@ function PlagueMap() {
     const { action, idplague } = location.state || {};
     if (action === "edit" && idplague && markers.length > 0) {
       const markerToEdit = markers.find(
-        (m) => Number(m.idplague) === Number(idplague)
+        (m) => Number(m.idplague) === Number(idplague),
       );
 
       if (markerToEdit) {
