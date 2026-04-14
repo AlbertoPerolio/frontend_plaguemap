@@ -35,6 +35,7 @@ function MarkerForm({
     "Chatarra",
     "Recipientes con Agua",
     "Acumulación de Agua",
+    "Caso confirmado",
   ];
 
   useEffect(() => {
@@ -88,7 +89,7 @@ function MarkerForm({
     // 1. Validaciones previas
     if (!opcionesTitulo.includes(title) || !position) {
       setError(
-        "Por favor, selecciona un título válido y una ubicación en el mapa."
+        "Por favor, selecciona un título válido y una ubicación en el mapa.",
       );
       return;
     }

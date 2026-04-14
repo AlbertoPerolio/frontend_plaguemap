@@ -30,8 +30,17 @@ import {
 const MARKER_ICON_BASE =
   "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img";
 
+const confirmedIcon = L.icon({
+  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-red.png`, // Icono rojo
+  shadowUrl: `${MARKER_ICON_BASE}/marker-shadow.png`,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 const approvedIcon = L.icon({
-  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-green.png`,
+  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-yellow.png`,
   shadowUrl: `${MARKER_ICON_BASE}/marker-shadow.png`,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -40,7 +49,7 @@ const approvedIcon = L.icon({
 });
 
 const pendingIcon = L.icon({
-  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-yellow.png`,
+  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-blue.png`,
   shadowUrl: `${MARKER_ICON_BASE}/marker-shadow.png`,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -343,21 +352,32 @@ function PlagueMap() {
 
         {markers
           .filter((m) => getFilteredMarkers([m]).length > 0)
-          .map((marker) => (
-            <MarkerPopup
-              key={marker.idplague}
-              marker={marker}
-              user={user}
-              defaultIcon={
-                marker.status === "pendiente" ? pendingIcon : approvedIcon
-              }
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onApprove={handleApprove}
-              openImageModal={openImageModal}
-              ref={(el) => (popupRefs.current[marker.idplague] = el)}
-            />
-          ))}
+          .map((marker) => {
+            // Lógica de color dinámica
+            let iconToUse;
+
+            if (marker.status === "pendiente") {
+              iconToUse = pendingIcon; // Azul
+            } else if (marker.title === "Caso confirmado") {
+              iconToUse = confirmedIcon; // Rojo si está aprobado y es Caso confirmado
+            } else {
+              iconToUse = approvedIcon; // Amarillo para el resto de aprobados
+            }
+
+            return (
+              <MarkerPopup
+                key={marker.idplague}
+                marker={marker}
+                user={user}
+                defaultIcon={iconToUse} // Pasamos el icono seleccionado
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onApprove={handleApprove}
+                openImageModal={openImageModal}
+                ref={(el) => (popupRefs.current[marker.idplague] = el)}
+              />
+            );
+          })}
       </MapContainer>
 
       {showForm && (
