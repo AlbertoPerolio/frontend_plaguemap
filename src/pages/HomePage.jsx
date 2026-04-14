@@ -90,7 +90,7 @@ function HomePage() {
         <div className="about-us-container">
           <div className="about-us">
             <div className="about-left">
-              <h3 className="heading-about">Plagas</h3>
+              <h3 className="heading-about">Dengue</h3>
               <p className="para-about">
                 Actualmente se conocen muchas plagas que están en Aguaray, como
                 Dengue, Zika, Leishmaniasis, Chikunguña, Oropuche y Mayaro. Esta
@@ -115,7 +115,7 @@ function HomePage() {
 
       {/* Sección Plagas Cards - Carrusel */}
       <section className="product-category" id="plagas">
-        <h2 className="heading-product">Plagas</h2>
+        <h2 className="heading-product">Mosquitos</h2>
 
         <div className="carousel-wrapper">
           <button className="carousel-btn left" onClick={scrollLeft}>
