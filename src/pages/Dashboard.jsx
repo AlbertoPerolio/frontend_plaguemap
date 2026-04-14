@@ -454,7 +454,7 @@ function Dashboard() {
             setFilters((prev) => ({ ...prev, plagueType: e.target.value }))
           }
         >
-          <option value="all">Zonas criticas</option>
+          <option value="all">Todas las zonas criticas</option>
           {uniquePlagues.map((plague) => (
             <option key={plague} value={plague}>
               {plague}
