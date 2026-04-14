@@ -386,7 +386,7 @@ function Dashboard() {
     XLSX.utils.book_append_sheet(wb, ws2, "Resumen Estadístico");
     XLSX.utils.book_append_sheet(wb, ws3Estado, "Estado");
     XLSX.utils.book_append_sheet(wb, ws3Usuario, "Usuarios");
-    XLSX.utils.book_append_sheet(wb, ws3Plaga, "Plagas");
+    XLSX.utils.book_append_sheet(wb, ws3Plaga, "Zonas Criticas");
 
     // Guardar archivo
     XLSX.writeFile(wb, "estadistica_marcadores.xlsx");
@@ -517,7 +517,7 @@ function Dashboard() {
             <tr>
               {user?.role === "admin" && <th>Usuario</th>}
               {user?.role === "admin" && <th>Rol</th>}
-              <th>Plaga</th>
+              <th>Zonas Criticas</th>
               <th>Descripción</th>
               <th>Imagen</th>
               <th>Estado</th>
@@ -620,7 +620,7 @@ function Dashboard() {
       <ImageModal imageUrl={modalImage} onClose={closeImageModal} />
 
       <ConfirmationModal
-        message="¿Estás seguro de que quieres eliminar este reporte de plaga? Esta acción es irreversible."
+        message="¿Estás seguro de que quieres eliminar este reporte? Esta acción es irreversible."
         isOpen={confirmModal.isOpen}
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
