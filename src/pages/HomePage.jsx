@@ -74,9 +74,9 @@ function HomePage() {
             </div>
             <div className="home-text">
               <h1 className="home-heading">
-                Mapa sobre <span className="home-span">Plagas</span>
+                Mapa sobre <span className="home-span">Zonas Criticas</span>
               </h1>
-              <p className="para-home">Página para localizar plagas</p>
+              <p className="para-home">Página para localizar Zonas Criticas</p>
               <a href="/register" className="home-links btn-2">
                 Crear Cuenta
               </a>
