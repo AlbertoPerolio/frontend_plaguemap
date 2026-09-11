@@ -37,7 +37,7 @@ function MarkerForm({
     "Acumulación de Agua",
     "Pozo de agua",
     "Caso confirmado",
-  ];
+  ].filter((op) => op !== "Caso confirmado" || user?.role === "admin");
 
   useEffect(() => {
     if (markerToEdit) {

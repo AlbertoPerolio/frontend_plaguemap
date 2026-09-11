@@ -127,13 +127,18 @@ function PlagueMap() {
 
   const getFilteredMarkers = useCallback(
     (allMarkers) =>
-      allMarkers.filter((m) =>
-        !user
+      allMarkers.filter((m) => {
+        const visibleByStatus = !user
           ? m.status === "aprobado"
           : user.role === "admin"
             ? true
-            : m.status === "aprobado" || m.id_reg === user.id_reg,
-      ),
+            : m.status === "aprobado" || m.id_reg === user.id_reg;
+
+        const visibleByRole =
+          user?.role === "admin" || m.title !== "Caso confirmado";
+
+        return visibleByStatus && visibleByRole;
+      }),
     [user],
   );
 
