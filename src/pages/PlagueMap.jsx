@@ -57,6 +57,15 @@ const pendingIcon = L.icon({
   shadowSize: [41, 41],
 });
 
+const goodIcon = L.icon({
+  iconUrl: `${MARKER_ICON_BASE}/marker-icon-2x-green.png`,
+  shadowUrl: `${MARKER_ICON_BASE}/marker-shadow.png`,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 const defaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -360,6 +369,8 @@ function PlagueMap() {
               iconToUse = pendingIcon; // Azul
             } else if (marker.title === "Caso confirmado") {
               iconToUse = confirmedIcon; // Rojo si está aprobado y es Caso confirmado
+            } else if (marker.title === "Pozo de agua") {
+              iconToUse = goodIcon; // Verde para Pozo de agua
             } else {
               iconToUse = approvedIcon; // Amarillo para el resto de aprobados
             }

@@ -8,7 +8,7 @@ function MarkerClickHandler({
 }) {
   useMapEvents({
     click(e) {
-      if (user && (user.role === "user" || user.role === "admin")) {
+      if (user && user.role === "admin") {
         setNewMarkerPosition(e.latlng);
         setTemporaryMarker(e.latlng);
         setShowForm(true);

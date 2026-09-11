@@ -35,6 +35,7 @@ function MarkerForm({
     "Chatarra",
     "Recipientes con Agua",
     "Acumulación de Agua",
+    "Pozo de agua",
     "Caso confirmado",
   ];
 
